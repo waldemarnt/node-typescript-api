@@ -4,6 +4,8 @@
   "description": "Complete API built with Node.js and Typescript",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "start": "NODE_ENV=production yarn build && node dist/src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/waldemarnt/node-typescript-api/issues"
   },
-  "homepage": "https://github.com/waldemarnt/node-typescript-api#readme"
+  "homepage": "https://github.com/waldemarnt/node-typescript-api#readme",
+  "dependencies": {
+    "typescript": "^3.8.3"
+  }
 }
