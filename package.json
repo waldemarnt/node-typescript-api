@@ -1,0 +1,25 @@
+{
+  "name": "typescript-api",
+  "version": "1.0.0",
+  "description": "Complete API built with Node.js and Typescript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waldemarnt/node-typescript-api.git"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "typescript",
+    "api"
+  ],
+  "author": "Waldemar Neto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/waldemarnt/node-typescript-api/issues"
+  },
+  "homepage": "https://github.com/waldemarnt/node-typescript-api#readme"
+}
