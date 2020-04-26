@@ -24,8 +24,12 @@
     "url": "https://github.com/waldemarnt/node-typescript-api/issues"
   },
   "homepage": "https://github.com/waldemarnt/node-typescript-api#readme",
-  "dependencies": {},
+  "dependencies": {
+    "module-alias": "^2.2.2"
+  },
   "devDependencies": {
+    "@types/module-alias": "^2.0.0",
+    "@types/node": "^13.13.2",
     "typescript": "^3.8.3"
   }
 }
