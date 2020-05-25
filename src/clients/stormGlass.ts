@@ -63,7 +63,7 @@ export class StormGlass {
   }
 
   private isValidPoint(point: Partial<StormGlassPoint>): boolean {
-    if (
+    return !!(
       point.time &&
       point.swellDirection?.[this.stormGlassAPISource] &&
       point.swellHeight?.[this.stormGlassAPISource] &&
@@ -72,9 +72,6 @@ export class StormGlass {
       point.waveHeight?.[this.stormGlassAPISource] &&
       point.windDirection?.[this.stormGlassAPISource] &&
       point.windSpeed?.[this.stormGlassAPISource]
-    ) {
-      return true;
-    }
-    return false;
+    );
   }
 }
