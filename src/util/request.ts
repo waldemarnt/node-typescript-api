@@ -22,10 +22,6 @@ export class Request {
   }
 
   public static isRequestError(error: AxiosError): boolean {
-    console.log(
-      'TESTTTTTTTTTTTTTT'
-      //!!(error.response && error.response.status)
-    );
     return !!(error.response && error.response.status);
   }
 }
