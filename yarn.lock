@@ -457,10 +457,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@overnightjs/core@^1.6.15":
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/@overnightjs/core/-/core-1.7.0.tgz#fd6f7e3124ca3691c87af3753c1fe9d776bbc82b"
-  integrity sha512-wvrYuM2IihRRaYl3gcoNWoblVdpQavkUqnbc22mlLOc7jYYTupiE/xQfr9zMG7rhCkg2pJMY5hZq8ZcmBkpWtQ==
+"@overnightjs/core@^1.7.4":
+  version "1.7.4"
+  resolved "https://registry.yarnpkg.com/@overnightjs/core/-/core-1.7.4.tgz#1d98329c77bcdbdb460d31c82024851c6dfe12fb"
+  integrity sha512-xC1rn84b2FnqgXYM88L8R46dTqYtev8jiq0qBTGWGIOm1N3r8ZDYCud5FMuizLjL4Cl4DvErKaSYx5pzxG8tMw==
   dependencies:
     express "^4.16.3"
     reflect-metadata "^0.1.13"
