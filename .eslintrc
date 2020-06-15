@@ -8,10 +8,5 @@
       "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
-    ],
-    "rules": {
-      "@typescript-eslint/interface-name-prefix": 0,
-      "@typescript-eslint/no-empty-interface": 0,
-      "@typescript-eslint/no-explicit-any": 0
-    }
+    ]
 }
