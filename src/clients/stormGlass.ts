@@ -28,6 +28,7 @@ export interface ForecastPoint {
   swellHeight: number;
   swellPeriod: number;
   windDirection: number;
+  windSpeed: number;
 }
 
 /**
