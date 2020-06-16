@@ -1,0 +1,68 @@
+{
+  "name": "typescript-api",
+  "version": "1.0.0",
+  "description": "Complete API built with Node.js and Typescript",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "yarn build && node dist/src/index.js",
+    "start:local": "ts-node-dev 'src/index.ts'",
+    "test": "yarn test:unit && yarn test:functional",
+    "lint": "eslint ./src ./test --ext .ts",
+    "lint:fix": "eslint ./src ./test --ext .ts --fix",
+    "test:functional": "jest --projects ./test --runInBand",
+    "test:unit": "jest",
+    "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
+    "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/waldemarnt/node-typescript-api.git"
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "typescript",
+    "api"
+  ],
+  "author": "Waldemar Neto",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/waldemarnt/node-typescript-api/issues"
+  },
+  "homepage": "https://github.com/waldemarnt/node-typescript-api#readme",
+  "dependencies": {
+    "@overnightjs/core": "^1.7.4",
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
+    "mongoose": "^5.9.18"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/bcrypt": "^3.0.0",
+    "@types/config": "^0.0.36",
+    "@types/express": "^4.17.6",
+    "@types/jest": "^25.2.2",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/module-alias": "^2.0.0",
+    "@types/mongoose": "^5.7.22",
+    "@types/nock": "^11.1.0",
+    "@types/node": "^13.13.2",
+    "@types/supertest": "^2.0.9",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "eslint": "^6.8.0",
+    "jest": "^26.0.1",
+    "nock": "^12.0.3",
+    "prettier": "^2.0.5",
+    "supertest": "^4.0.2",
+    "ts-jest": "^26.0.0",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "typescript": "^3.8.3"
+  }
+}
