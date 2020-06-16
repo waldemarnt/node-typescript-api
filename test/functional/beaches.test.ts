@@ -16,7 +16,8 @@ describe('Beaches functional tests', () => {
       //Object containing matches the keys and values, even if includes other keys such as id.
       expect(response.body).toEqual(expect.objectContaining(newBeach));
     });
-    it('should throw 422 when there is a validation error', async () => {
+
+    it('should return 422 when there is a validation error', async () => {
       const newBeach = {
         lat: 'invalid_string',
         lng: 151.289824,
