@@ -1,10 +1,7 @@
 import { Beach } from '@src/models/beach';
 
 describe('Beaches functional tests', () => {
-  beforeEach(async () => {
-    await Beach.deleteMany({});
-  });
-
+  beforeAll(async () => await Beach.deleteMany({}));
   describe('When creating a new beach', () => {
     it('should create a beach with success', async () => {
       const newBeach = {
@@ -35,7 +32,7 @@ describe('Beaches functional tests', () => {
       });
     });
 
-    it.skip('should return 500 when there any error other than validation error', async () => {
+    it.skip('should return 500 when there is any error other than validation error', async () => {
       //TODO think in a way to throw a 500
     });
   });
