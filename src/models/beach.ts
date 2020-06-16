@@ -33,6 +33,5 @@ const schema = new mongoose.Schema(
   }
 );
 
-type BeachModel = Exclude<Beach, '_id'> & Document;
-
+interface BeachModel extends Omit<Beach, '_id'>, Document {}
 export const Beach: Model<BeachModel> = mongoose.model('Beach', schema);
