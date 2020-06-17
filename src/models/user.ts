@@ -7,11 +7,7 @@ export interface User {
   password: string;
 }
 
-interface UserModel extends Document {
-  name: string;
-  email: string;
-  password: string;
-}
+interface UserModel extends Omit<User, '_id'>, Document {}
 
 const schema = new mongoose.Schema(
   {
