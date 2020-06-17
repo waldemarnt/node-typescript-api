@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { User } from '@src/models/user';
 
 //version of the user that is send to via API and decoded from the Json Web Token
-export interface DecodedUser extends Exclude<User, '_id'> {
+export interface DecodedUser extends Omit<User, '_id'> {
   id: string;
 }
 
@@ -30,9 +30,6 @@ export default class AuthService {
   }
 
   public static decodeToken(token: string): DecodedUser {
-    return jwt.verify(
-      token as string,
-      config.get('App.auth.key')
-    ) as DecodedUser;
+    return jwt.verify(token, config.get('App.auth.key')) as DecodedUser;
   }
 }

@@ -3,7 +3,7 @@ import { User } from '@src/models/user';
 import AuthService from '@src/services/auth';
 
 describe('Beaches functional tests', () => {
-  const defaultUser: User = {
+  const defaultUser = {
     name: 'John Doe',
     email: 'john2@mail.com',
     password: '1234',

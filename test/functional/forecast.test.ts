@@ -12,17 +12,16 @@ describe('Beach forecast functional tests', () => {
     password: '1234',
   };
   let token: string;
-
   beforeEach(async () => {
     await Beach.deleteMany({});
     await User.deleteMany({});
     const user = await new User(defaultUser).save();
-    const defaultBeach: Beach = {
+    const defaultBeach = {
       lat: -33.792726,
       lng: 151.289824,
       name: 'Manly',
       position: BeachPosition.E,
-      user: user._id,
+      user: user.id,
     };
     await new Beach(defaultBeach).save();
     token = AuthService.generateToken(user.toJSON());
@@ -43,6 +42,7 @@ describe('Beach forecast functional tests', () => {
         source: 'noaa',
       })
       .reply(200, stormGlassWeather3HoursFixture);
+
     const { body, status } = await global.testRequest
       .get('/forecast')
       .set({ 'x-access-token': token });
