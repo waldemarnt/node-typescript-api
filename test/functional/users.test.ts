@@ -13,10 +13,9 @@ describe('Users functional tests', () => {
         password: '1234',
       };
       const response = await global.testRequest.post('/users').send(newUser);
-
       expect(response.status).toBe(201);
       await expect(
-        AuthService.comparePasswords(response.body.password, newUser.password)
+        AuthService.comparePasswords(newUser.password, response.body.password)
       ).resolves.toBeTruthy();
       expect(response.body).toEqual(
         expect.objectContaining({
@@ -25,20 +24,22 @@ describe('Users functional tests', () => {
         })
       );
     });
-    it('Should throw 400 when there is a validation error', async () => {
+
+    it('Should return 422 when there is a validation error', async () => {
       const newUser = {
         email: 'john@mail.com',
         password: '1234',
       };
       const response = await global.testRequest.post('/users').send(newUser);
 
-      expect(response.status).toBe(400);
+      expect(response.status).toBe(422);
       expect(response.body).toEqual({
-        code: 400,
+        code: 422,
         error: 'User validation failed: name: Path `name` is required.',
       });
     });
-    it('Should throw 400 when the user already exists', async () => {
+
+    it('Should return 409 when the email already exists', async () => {
       const newUser = {
         name: 'John Doe',
         email: 'john@mail.com',
@@ -47,10 +48,11 @@ describe('Users functional tests', () => {
       await global.testRequest.post('/users').send(newUser);
       const response = await global.testRequest.post('/users').send(newUser);
 
-      expect(response.status).toBe(400);
-      expect(response.body.error).toBe(
-        'User validation failed: email: already exists in the database.'
-      );
+      expect(response.status).toBe(409);
+      expect(response.body).toEqual({
+        code: 409,
+        error: 'User validation failed: email: already exists in the database.',
+      });
     });
   });
 

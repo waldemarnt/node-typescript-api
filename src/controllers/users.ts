@@ -1,8 +1,8 @@
 import { Controller, Post } from '@overnightjs/core';
 import { Response, Request } from 'express';
 import { User } from '@src/models/user';
-import { BaseController } from '.';
 import AuthService from '@src/services/auth';
+import { BaseController } from './index';
 
 @Controller('users')
 export class UsersController extends BaseController {
@@ -13,7 +13,7 @@ export class UsersController extends BaseController {
       const newUser = await user.save();
       res.status(201).send(newUser);
     } catch (error) {
-      this.sendCreateUpdateErrorReponse(res, error);
+      this.sendCreateUpdateErrorResponse(res, error);
     }
   }
 
@@ -27,7 +27,7 @@ export class UsersController extends BaseController {
       });
     }
     if (
-      !(await AuthService.comparePasswords(user.password, req.body.password))
+      !(await AuthService.comparePasswords(req.body.password, user.password))
     ) {
       return res
         .status(401)
