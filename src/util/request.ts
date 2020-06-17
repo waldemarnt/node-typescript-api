@@ -1,24 +1,15 @@
-import axios, {
-  AxiosStatic,
-  AxiosPromise,
-  AxiosRequestConfig,
-  AxiosResponse,
-  AxiosError,
-} from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-export interface ResponsePromise<T> extends AxiosPromise<T> {}
+/* eslint-disable @typescript-eslint/no-empty-interface */
 export interface RequestConfig extends AxiosRequestConfig {}
-export interface Reponse<T = any> extends AxiosResponse<T> {}
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export interface Response<T = any> extends AxiosResponse<T> {}
 
 export class Request {
-  private request: AxiosStatic;
+  constructor(private request = axios) {}
 
-  constructor(request = axios) {
-    this.request = request;
-  }
-
-  public get<T>(url: string, config: RequestConfig = {}): ResponsePromise<T> {
-    return this.request.get<T>(url, config);
+  public get<T>(url: string, config: RequestConfig = {}): Promise<Response<T>> {
+    return this.request.get<T, Response<T>>(url, config);
   }
 
   public static isRequestError(error: AxiosError): boolean {

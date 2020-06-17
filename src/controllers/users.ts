@@ -1,7 +1,7 @@
 import { Controller, Post } from '@overnightjs/core';
 import { Response, Request } from 'express';
 import { User } from '@src/models/user';
-import { BaseController } from '.';
+import { BaseController } from './index';
 
 @Controller('users')
 export class UsersController extends BaseController {
@@ -12,7 +12,7 @@ export class UsersController extends BaseController {
       const newUser = await user.save();
       res.status(201).send(newUser);
     } catch (error) {
-      this.sendCreateUpdateErrorReponse(res, error);
+      this.sendCreateUpdateErrorResponse(res, error);
     }
   }
 }
