@@ -44,6 +44,6 @@ jobs:
 
     - name: Deployment
       if: github.ref == 'refs/heads/master'
-      run: git remote add umbler ssh://git@geonosis.deploy.umbler.com:9922/jy4xooxj/waldemarnt-com.git && git push umbler master
+      run: git remote add umbler ssh://git@geonosis.deploy.umbler.com:9922/jy4xooxj/waldetest-com.git && git push umbler master
       env:
         CI: true
