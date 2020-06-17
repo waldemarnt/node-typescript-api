@@ -1,0 +1,20 @@
+{
+  "App": {
+    "database": {
+      "mongoUrl": "MONGODB_URL"
+    },
+    "resources": {
+      "stormGlass": {
+        "apiV1URL": "STORM_GLASS_API_URL",
+        "apiToken": "STORM_GLASS_API_TOKEN"
+      }
+    },
+    "auth": {
+      "key": "JWT_SECRET_KEY"
+    },
+    "logger": {
+      "enabled": "LOGGER_ENABLED"
+    }
+  }
+}
+
