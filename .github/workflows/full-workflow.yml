@@ -3,9 +3,7 @@
 
 name: Complete workflow
 
-on:
-  push:
-    branches: [ '*' ]
+on: ['push']
 
 jobs:
   build:
