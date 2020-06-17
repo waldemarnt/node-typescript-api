@@ -2,6 +2,7 @@ import './util/module-alias';
 import { Server } from '@overnightjs/core';
 import { Application } from 'express';
 import bodyParser from 'body-parser';
+import * as http from 'http';
 import { ForecastController } from './controllers/forecast';
 import * as database from '@src/database';
 import { BeachesController } from './controllers/beaches';
@@ -9,6 +10,7 @@ import { UsersController } from './controllers/users';
 import logger from './logger';
 
 export class SetupServer extends Server {
+  private server?: http.Server;
   /*
    * same as this.port = port, declaring as private here will
    * add the port variable to the SetupServer instance
@@ -53,10 +55,18 @@ export class SetupServer extends Server {
 
   public async close(): Promise<void> {
     await database.close();
+    await new Promise((resolve, reject) => {
+      this.server?.close((err) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
   }
 
   public start(): void {
-    this.app.listen(this.port, () => {
+    this.server = this.app.listen(this.port, () => {
       logger.info('Server listening on port: ' + this.port);
     });
   }
