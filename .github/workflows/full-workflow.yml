@@ -36,3 +36,15 @@ jobs:
     - name: Run all tests
       run: yarn test
 
+    - shell: bash
+      #if: github.ref == 'refs/heads/master'
+      name: Create SSH deployment key
+      env:
+        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: ./scripts/deploy.sh
+
+    - name: Deployment
+      #if: github.ref == 'refs/heads/master'
+      run: git remote add umbler ssh://git@kamino.deploy.umbler.com:9922/jg2p1vgk/waldemar-surf-forecast-com.git && git push umbler master
+      env:
+        CI: true
