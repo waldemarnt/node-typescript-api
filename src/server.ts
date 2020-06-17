@@ -55,14 +55,16 @@ export class SetupServer extends Server {
 
   public async close(): Promise<void> {
     await database.close();
-    await new Promise((resolve, reject) => {
-      this.server?.close((err) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve();
+    if (this.server) {
+      await new Promise((resolve, reject) => {
+        this.server?.close((err) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve();
+        });
       });
-    });
+    }
   }
 
   public start(): void {
