@@ -15,7 +15,7 @@
       }
     },
     "logger": {
-      "enabled": "true",
+      "enabled": true,
       "level": "info"
     }
   }
