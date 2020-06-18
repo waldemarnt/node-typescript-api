@@ -4,6 +4,7 @@ import { Beach } from '@src/models/beach';
 import { Forecast } from '@src/services/forecast';
 import { authMiddleware } from '@src/middlewares/auth';
 import { BaseController } from '.';
+import logger from '@src/logger';
 
 const forecast = new Forecast();
 
@@ -20,6 +21,7 @@ export class ForecastController extends BaseController {
       const forecastData = await forecast.processForecastForBeaches(beaches);
       res.status(200).send(forecastData);
     } catch (error) {
+      logger.error(error);
       this.sendErrorResponse(res, {
         code: 500,
         message: 'Something went wrong',
