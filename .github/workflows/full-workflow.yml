@@ -6,6 +6,7 @@ name: Complete workflow
 on: ['push']
 
 jobs:
+
   build:
 
     runs-on: ubuntu-latest
@@ -44,6 +45,6 @@ jobs:
 
     - name: Deployment
       if: github.ref == 'refs/heads/master'
-      run: git remote add umbler ssh://git@geonosis.deploy.umbler.com:9922/jy4xooxj/waldetest-com.git && git push umbler master
+      run: git remote add umbler ssh://git@kamino.deploy.umbler.com:9922/jg2p1vgk/waldemar-surf-forecast-com.git && git push umbler master
       env:
         CI: true
