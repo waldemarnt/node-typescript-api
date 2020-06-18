@@ -1,6 +1,5 @@
 import { StormGlass } from '@src/clients/stormGlass';
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
-import stormGlassNormalizedResponse1HourMultiplePointsFixture from '@test/fixtures/stormglass_normalized_response_1_hour_multiple_points.json';
 import { Forecast, ForecastProcessingInternalError } from '../forecast';
 import { Beach, BeachPosition } from '@src/models/beach';
 
@@ -9,10 +8,31 @@ jest.mock('@src/clients/stormGlass');
 describe('Forecast Service', () => {
   const mockedStormGlassService = new StormGlass() as jest.Mocked<StormGlass>;
 
-  it('should return the forecast for a list of beaches ordered by rating', async () => {
-    mockedStormGlassService.fetchPoints.mockResolvedValue(
-      stormGlassNormalizedResponse1HourMultiplePointsFixture
-    );
+  it('should return the forecast for mutiple beaches in the same hour with different ratings', async () => {
+    mockedStormGlassService.fetchPoints.mockResolvedValueOnce([
+      {
+        swellDirection: 123.41,
+        swellHeight: 0.21,
+        swellPeriod: 3.67,
+        time: '2020-04-26T00:00:00+00:00',
+        waveDirection: 232.12,
+        waveHeight: 0.46,
+        windDirection: 310.48,
+        windSpeed: 100,
+      },
+    ]);
+    mockedStormGlassService.fetchPoints.mockResolvedValueOnce([
+      {
+        swellDirection: 64.26,
+        swellHeight: 0.15,
+        swellPeriod: 13.89,
+        time: '2020-04-26T00:00:00+00:00',
+        waveDirection: 231.38,
+        waveHeight: 2.07,
+        windDirection: 299.45,
+        windSpeed: 100,
+      },
+    ]);
     const beaches: Beach[] = [
       {
         lat: -33.792726,
@@ -21,26 +41,18 @@ describe('Forecast Service', () => {
         position: BeachPosition.E,
         user: 'fake-id',
       },
+      {
+        lat: -33.792726,
+        lng: 141.289824,
+        name: 'Dee Why',
+        position: BeachPosition.S,
+        user: 'fake-id',
+      },
     ];
     const expectedResponse = [
       {
         time: '2020-04-26T00:00:00+00:00',
         forecast: [
-          {
-            lat: -33.792726,
-            lng: 151.289824,
-            name: 'Manly',
-            position: 'E',
-            rating: 3,
-            swellDirection: 64.26,
-            swellHeight: 0.15,
-            swellPeriod: 13.89,
-            time: '2020-04-26T00:00:00+00:00',
-            waveDirection: 231.38,
-            waveHeight: 2.07,
-            windDirection: 299.45,
-            windSpeed: 100,
-          },
           {
             lat: -33.792726,
             lng: 151.289824,
@@ -58,17 +70,17 @@ describe('Forecast Service', () => {
           },
           {
             lat: -33.792726,
-            lng: 151.289824,
-            name: 'Manly',
-            position: 'E',
-            rating: 2,
-            swellDirection: 182.56,
-            swellHeight: 0.28,
-            swellPeriod: 3.44,
+            lng: 141.289824,
+            name: 'Dee Why',
+            position: 'S',
+            rating: 3,
+            swellDirection: 64.26,
+            swellHeight: 0.15,
+            swellPeriod: 13.89,
             time: '2020-04-26T00:00:00+00:00',
-            waveDirection: 232.86,
-            waveHeight: 0.46,
-            windDirection: 321.5,
+            waveDirection: 231.38,
+            waveHeight: 2.07,
+            windDirection: 299.45,
             windSpeed: 100,
           },
         ],
