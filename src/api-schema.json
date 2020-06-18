@@ -47,7 +47,7 @@
               }
             }
           },
-          "422": {
+          "400": {
             "description": "Invalid parameters",
             "content": {
               "application/json": {
@@ -56,8 +56,8 @@
                 },
                 "example": {
                   "message": "Invalid parameters",
-                  "code": "422",
-                  "error": "Unprocessable Entity"
+                  "code": "400",
+                  "error": "Bad Request"
                 }
               }
             }
@@ -187,7 +187,7 @@
               }
             }
           },
-          "422": {
+          "400": {
             "description": "Error validating the beach data.",
             "content": {
               "application/json": {
@@ -196,8 +196,8 @@
                 },
                 "example": {
                   "message": "Error validating beach data",
-                  "code": "422",
-                  "error": "Unprocessable Entity"
+                  "code": "400",
+                  "error": "Bad Request"
                 }
               }
             }
