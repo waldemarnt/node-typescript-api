@@ -14,6 +14,7 @@ import { BeachesController } from './controllers/beaches';
 import { UsersController } from './controllers/users';
 import logger from './logger';
 import apiSchema from './api-schema.json';
+import { apiErrorValidator } from './middlewares/api-error-validator';
 
 export class SetupServer extends Server {
   private server?: http.Server;
@@ -34,6 +35,8 @@ export class SetupServer extends Server {
     await this.docsSetup();
     this.setupControllers();
     await this.databaseSetup();
+    //must be the last
+    this.setupErrorHandlers();
   }
 
   private setupExpress(): void {
@@ -68,6 +71,10 @@ export class SetupServer extends Server {
       beachesController,
       usersController,
     ]);
+  }
+
+  private setupErrorHandlers(): void {
+    this.app.use(apiErrorValidator);
   }
 
   public getApp(): Application {
