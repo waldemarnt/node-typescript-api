@@ -42,13 +42,15 @@
     "config": "^3.3.1",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "express-openapi-validator": "^3.16.1",
     "express-pino-logger": "^5.0.0",
     "http-status-codes": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "module-alias": "^2.2.2",
     "mongoose": "^5.9.18",
-    "pino": "^6.3.2"
+    "pino": "^6.3.2",
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
@@ -65,6 +67,7 @@
     "@types/node": "^13.13.2",
     "@types/pino": "^6.3.0",
     "@types/supertest": "^2.0.9",
+    "@types/swagger-ui-express": "^4.1.2",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "eslint": "^6.8.0",

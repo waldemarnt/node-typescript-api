@@ -1,0 +1,495 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.3.0",
+    "title": "Surf Forecast",
+    "description": "Surf Forecast API",
+    "termsOfService": "http://api_url/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://waldemarnt-com.umbler.net/",
+      "description": "Production Server"
+    },
+    {
+      "url": "http://localhost:3000/",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "description": "Create a new User",
+        "operationId": "createUser",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The user has been created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserCreatedResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Invalid parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Invalid parameters",
+                  "code": "422",
+                  "error": "Unprocessable Entity"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/authenticate": {
+      "post": {
+        "description": "Authenticate the user on the API generating a JWT token",
+        "operationId": "authenticateUser",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAuth"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "The user has been authenticate and the JWT returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthenticatedUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "User unauthorized",
+                  "code": "401",
+                  "error": "Unauthorized"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "description": "Get the profile of the token's owner",
+        "operationId": "getUserProfile",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/jwtToken"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The user information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "User not found",
+                  "code": "404",
+                  "error": "Not Found"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/beaches": {
+      "post": {
+        "description": "Create a new Beach belonging to the authenticated user",
+        "operationId": "createBeach",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/jwtToken"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Beach"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "The Beach has been created!"
+          },
+          "422": {
+            "description": "Error validating the beach data.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Error validating beach data",
+                  "code": "422",
+                  "error": "Unprocessable Entity"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/forecast": {
+      "get": {
+        "description": "Get the list of forecast ordered by the most ranked",
+        "operationId": "getForecast",
+        "parameters": [
+          {
+            "name": "x-access-token",
+            "in": "header",
+            "schema": {
+              "$ref": "#/components/schemas/jwtToken"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The list of forecast has been returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TimeForecast"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "jwtToken": {
+        "type": "string",
+        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZTdmZTQ0YzQzYWQwYjAwMThmOGQ5ZmQiLCJuYW1lIjoiV2FsZGVtYXIgTmV0byIsImVtYWlsIjoid2FsZGVtYXJudEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRsUlZjWkc5d0dIVWJXcHF2TnJNR0F1SnNoWWJTR1RLSElQL3NycDlmTlkzZENFZDBJQjN6TyIsImlhdCI6MTU4NTQ0MDUxNywiZXhwIjoxNTg1NDYwNTE3fQ.JNtzLgCKGTAU9_-QjYUNxtM7X4nMU_pPIsNXDsEM-vP"
+      },
+      "name": {
+        "type": "string",
+        "example": "John Doe"
+      },
+      "email": {
+        "type": "string",
+        "example": "john@mail.com"
+      },
+      "password": {
+        "type": "string",
+        "example": "12345#@$$%"
+      },
+      "beachName": {
+        "type": "string",
+        "example": "Copacabana beach"
+      },
+      "beachLat": {
+        "type": "number",
+        "example": 10.55
+      },
+      "beachLng": {
+        "type": "number",
+        "example": -10.55
+      },
+      "id":{
+        "type": "string",
+        "example": "5e8131eba7768d9e4f06c884"
+      },
+      "beachPosition": {
+        "type": "string",
+        "enum": ["N", "S", "W", "E"],
+        "example": "S"
+      },
+      "forecastPropertyKey": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string",
+            "example": "noa"
+          },
+          "value": {
+            "type": "number",
+            "example": "10.1"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/name"
+          },
+          "email": {
+            "$ref": "#/components/schemas/email"
+          },
+          "password": {
+            "$ref": "#/components/schemas/password"
+          }
+        }
+      },
+      "Beach": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/beachName"
+          },
+          "lat": {
+            "$ref": "#/components/schemas/beachLat"
+          },
+          "lng": {
+            "$ref": "#/components/schemas/beachLng"
+          },
+          "position": {
+            "$ref": "#/components/schemas/beachPosition"
+          }
+        },
+        "required": ["name", "lat", "lng", "position"]
+      },
+      "TimeForecast": {
+        "type":"array",
+        "items": {
+          "type":"object",
+          "properties": {
+            "time": {
+              "type": "string",
+              "example": "2019-05-31T08:00:00+00:00"
+            },
+            "forecast": {
+              "$ref": "#/components/schemas/BeachForecast"
+            }
+          }
+        }
+      },
+      "BeachForecast": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "$ref": "#/components/schemas/beachName"
+            },
+            "lat": {
+              "$ref": "#/components/schemas/beachLat"
+            },
+            "lng": {
+              "$ref": "#/components/schemas/beachLng"
+            },
+            "position": {
+              "$ref": "#/components/schemas/beachPosition"
+            },
+            "rating": {
+              "type": "number",
+              "example": 3
+            },
+            "swellDirection": {
+              "type": "number",
+              "description": "Swell direction in degrees",
+              "example": 300
+            },
+            "swellHeight": {
+              "type": "number",
+              "description": "Swell height in meters",
+              "example": 1
+            },
+            "swellPeriod": {
+              "type": "number",
+              "description": "Swell period in seconds",
+              "example": 13.67
+            },
+            "waveDirection": {
+              "type": "number",
+              "description": "Wave direction in degrees",
+              "example": 234
+            },
+            "waveHeight": {
+              "type": "number",
+              "description": "Wave height in meters",
+              "example": 1.5
+            },
+            "windDirection": {
+              "type": "number",
+              "description": "Wind direction in degrees",
+              "example": 234
+            },
+            "windSpeed": {
+              "type": "number",
+              "description": "Wind speed in meters per second",
+              "example": 10
+            },
+            "time": {
+              "type": "string",
+              "example": "2019-05-31T08:00:00+00:00"
+            }
+          }
+        }
+      },
+      "UserAuth": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "$ref": "#/components/schemas/email"
+          },
+          "password": {
+            "$ref": "#/components/schemas/password"
+          }
+        }
+      },
+      "UserCreatedResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/name"
+              },
+              "email": {
+                "$ref": "#/components/schemas/email"
+              },
+              "password": {
+                "$ref": "#/components/schemas/password"
+              },
+              "id": {
+                "$ref": "#/components/schemas/id"
+              }
+            }
+          }
+        }
+      },
+      "AuthenticatedUserResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/name"
+              },
+              "email": {
+                "$ref": "#/components/schemas/email"
+              },
+              "password": {
+                "$ref": "#/components/schemas/password"
+              },
+              "id": {
+                "$ref": "#/components/schemas/id"
+              },
+              "token": {
+                "$ref": "#/components/schemas/jwtToken"
+              }
+            }
+          }
+        }
+      },
+      "UserProfileResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "$ref": "#/components/schemas/name"
+              },
+              "email": {
+                "$ref": "#/components/schemas/email"
+              },
+              "password": {
+                "$ref": "#/components/schemas/password"
+              },
+              "id": {
+                "$ref": "#/components/schemas/id"
+              }
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "number"
+          },
+          "error": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "documentation": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
+

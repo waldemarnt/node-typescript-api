@@ -5,11 +5,15 @@ import bodyParser from 'body-parser';
 import * as http from 'http';
 import expressPino from 'express-pino-logger';
 import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
+import { OpenApiValidator } from 'express-openapi-validator';
+import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import { ForecastController } from './controllers/forecast';
 import * as database from '@src/database';
 import { BeachesController } from './controllers/beaches';
 import { UsersController } from './controllers/users';
 import logger from './logger';
+import apiSchema from './api-schema.json';
 
 export class SetupServer extends Server {
   private server?: http.Server;
@@ -27,6 +31,7 @@ export class SetupServer extends Server {
    */
   public async init(): Promise<void> {
     this.setupExpress();
+    await this.docsSetup();
     this.setupControllers();
     await this.databaseSetup();
   }
@@ -43,6 +48,15 @@ export class SetupServer extends Server {
         origin: '*',
       })
     );
+  }
+
+  private async docsSetup(): Promise<void> {
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
+    await new OpenApiValidator({
+      apiSpec: apiSchema as OpenAPIV3.Document,
+      validateRequests: true,
+      validateResponses: true,
+    }).install(this.app);
   }
 
   private setupControllers(): void {
