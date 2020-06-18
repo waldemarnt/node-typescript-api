@@ -178,7 +178,14 @@
         },
         "responses": {
           "201": {
-            "description": "The Beach has been created!"
+            "description": "The Beach has been created!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BeachCreatedResponse"
+                }
+              }
+            }
           },
           "422": {
             "description": "Error validating the beach data.",
@@ -466,6 +473,26 @@
                 "$ref": "#/components/schemas/id"
               }
             }
+          }
+        }
+      },
+      "BeachCreatedResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "name": {
+            "$ref": "#/components/schemas/beachName"
+          },
+          "lat": {
+            "$ref": "#/components/schemas/beachLat"
+          },
+          "lng": {
+            "$ref": "#/components/schemas/beachLng"
+          },
+          "position": {
+            "$ref": "#/components/schemas/beachPosition"
           }
         }
       },
