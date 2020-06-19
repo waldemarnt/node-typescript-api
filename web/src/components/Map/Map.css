@@ -1,0 +1,15 @@
+
+html, body, #root, #map {
+  height: 100%;
+  width: 100%;
+}
+
+#map {
+  border-radius: .5em;
+  max-width: 75%;
+  max-height: 75%;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* blablabla */
+}
