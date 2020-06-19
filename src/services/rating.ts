@@ -20,32 +20,35 @@ export class Rating {
   constructor(private beach: Beach) {}
 
   public getRatingBasedOnWindAndWavePositions(
-    wavePoint: BeachPosition,
-    windPoint: BeachPosition
+    waveDirection: BeachPosition,
+    windDirection: BeachPosition
   ): number {
     // if wind is onshore, low rating
-    if (wavePoint === windPoint) {
+    if (waveDirection === windDirection) {
       return 1;
-    } else if (this.isWindOffShore(wavePoint, windPoint)) {
+    } else if (this.isWindOffShore(waveDirection, windDirection)) {
       return 5;
     }
     // cross winds gets 3
     return 3;
   }
 
-  private isWindOffShore(wavePoint: string, windPoint: string): boolean {
+  private isWindOffShore(
+    waveDirection: string,
+    windDirection: string
+  ): boolean {
     return (
-      (wavePoint === BeachPosition.N &&
-        windPoint === BeachPosition.S &&
+      (waveDirection === BeachPosition.N &&
+        windDirection === BeachPosition.S &&
         this.beach.position === BeachPosition.N) ||
-      (wavePoint === BeachPosition.S &&
-        windPoint === BeachPosition.N &&
+      (waveDirection === BeachPosition.S &&
+        windDirection === BeachPosition.N &&
         this.beach.position === BeachPosition.S) ||
-      (wavePoint === BeachPosition.E &&
-        windPoint === BeachPosition.W &&
+      (waveDirection === BeachPosition.E &&
+        windDirection === BeachPosition.W &&
         this.beach.position === BeachPosition.E) ||
-      (wavePoint === BeachPosition.W &&
-        windPoint === BeachPosition.E &&
+      (waveDirection === BeachPosition.W &&
+        windDirection === BeachPosition.E &&
         this.beach.position === BeachPosition.W)
     );
   }
