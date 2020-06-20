@@ -10,7 +10,7 @@ function ListForecast({ forecast, filterListItems}) {
     const [hour, setHour] = React.useState(null)
     
     const listItems = forecast.filter(filterListItems).slice(0, 5);
-
+    
     const forecastList = listItems.reduce((forecastByDay, item) => {
         const date = new Date(item.time);
         const day = new Intl.DateTimeFormat('en-GB', {month: 'numeric', day: 'numeric'}).format(date);
@@ -23,10 +23,10 @@ function ListForecast({ forecast, filterListItems}) {
 
     let initialHour = null;
     let newDay = false;
+    if (!hour) {
+        setHour(Object.keys(forecastList)[0])
+    }
     const timeSelection = Object.keys(forecastList).map(itemHour => {
-        if (!hour) {
-            setHour(itemHour)
-        }
         if (!initialHour) {
             initialHour = parseInt(forecastList[itemHour].time);
         } else if (parseInt(forecastList[itemHour].time) < initialHour && !newDay) {

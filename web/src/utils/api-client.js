@@ -25,13 +25,14 @@ async function client(endpoint, {body, ...customConfig} = {}) {
     return window
         .fetch(`${API_URL}/${endpoint}`, config) // TODO -> ${process.env.SURF_APP_API_URL}
         .then(async r => {
-            if (r.status === 401 || (r.status === 404 && r.url.includes('users/me'))) {
+            const data = await r.json();
+            console.log(data)
+            if ((r.status === 401 && !r.url.includes('users/authenticate')) || (r.status === 404 && r.url.includes('users/me'))) {
                 logout();
                 window.location.assign(window.location); // refresh page
                 return Promise.reject({message: 'Please re-authenticate.'})
             }
-
-            const data = await r.json();
+            
             if (r.ok) {
                 return data;
             } else {
