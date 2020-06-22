@@ -1,5 +1,5 @@
 {
-  "name": "surf-spots",
+  "name": "finding-waves",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +9,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "prettier": "^2.0.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-error-boundary": "^1.2.5",
@@ -22,7 +23,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint . --cache-location node_modules/.cache/eslint",
+    "format": "prettier --write \"**/*.+(js|json|css|md|mdx|html)\""
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -42,5 +45,4 @@
   "config": {
     "api_url": "http://waldemar-surf-forecast-com.umbler.net"
   }
-
 }

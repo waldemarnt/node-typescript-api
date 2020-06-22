@@ -1,8 +1,8 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
-import {jsx} from '@emotion/core'
+import { jsx } from '@emotion/core';
 
-import {Link} from '../components/misc'
+import { Link } from '../components/misc';
 
 function NotFoundScreen() {
   return (
@@ -18,7 +18,7 @@ function NotFoundScreen() {
         what... what are you doing here? <Link to="/">go back home</Link>
       </div>
     </div>
-  )
+  );
 }
 
-export {NotFoundScreen}
+export { NotFoundScreen };

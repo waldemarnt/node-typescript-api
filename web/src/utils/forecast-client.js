@@ -1,7 +1,7 @@
-import {client} from './api-client';
+import { client } from './api-client';
 
 function create(forecastData) {
-    return client('beaches', {body: forecastData});
+  return client('beaches', { body: forecastData });
 }
 
 function read() {
@@ -11,4 +11,4 @@ function read() {
   // ])
 }
 
-export {create, read}
+export { create, read };
