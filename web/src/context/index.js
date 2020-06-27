@@ -4,12 +4,19 @@ import { ReactQueryConfigProvider } from 'react-query';
 import { AuthProvider } from './auth-context';
 
 const queryConfig = {
-  useErrorBoundary: false,
-  refetchAllOnWindowFocus: false,
-  staleTime: 1000 * 60 * 60,
-  cacheTime: 1000 * 60 * 60,
-  refetchOnMount: false,
-  retry: false,
+  // TODO: fix config for mutations
+  queries: {
+    useErrorBoundary: false,
+    refetchOnWindowFocus: false,
+    staleTime: 1000 * 60 * 60,
+    cacheTime: 1000 * 60 * 60,
+    refetchOnMount: false,
+    retry: false,
+  },
+  mutations: {
+    throwOnError: false,
+    useErrorBoundary: false, // falls back to suspense
+  },
 };
 
 function AppProviders({ children }) {

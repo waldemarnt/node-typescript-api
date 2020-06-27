@@ -1461,10 +1461,10 @@
     tslib "^1.11.2"
     warning "^4.0.3"
 
-"@scarf/scarf@^1.0.0":
-  version "1.0.5"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/@scarf/scarf/-/scarf-1.0.5.tgz#accee0bce88a9047672f7c8faf3cada59c996b81"
-  integrity sha1-rM7gvOiKkEdnL3yPrzytpZyZa4E=
+"@scarf/scarf@^1.0.6":
+  version "1.0.6"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/@scarf/scarf/-/scarf-1.0.6.tgz#52011dfb19187b53b75b7b6eac20da0810ddd88f"
+  integrity sha1-UgEd+xkYe1O3W3turCDaCBDd2I8=
 
 "@sheerun/mutationobserver-shim@^0.3.2":
   version "0.3.3"
@@ -8888,13 +8888,13 @@ react-query-devtools@^1.1.5:
   dependencies:
     match-sorter "^4.1.0"
 
-react-query@^1.2.1:
-  version "1.5.3"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/react-query/-/react-query-1.5.3.tgz#672dbda734113e8b0e0b90b06e003c4daeef8a58"
-  integrity sha1-Zy29pzQRPosOC5CwbgA8Ta7vilg=
+react-query@^2.0.3:
+  version "2.0.3"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/react-query/-/react-query-2.0.3.tgz#70bd216fe342cf61a976f14520bf0fbd1151484f"
+  integrity sha1-cL0hb+NCz2GpdvFFIL8PvRFRSE8=
   dependencies:
-    "@scarf/scarf" "^1.0.0"
-    ts-toolbelt "^6.4.2"
+    "@scarf/scarf" "^1.0.6"
+    ts-toolbelt "^6.9.4"
 
 react-remove-scroll-bar@^2.1.0:
   version "2.1.0"
@@ -10427,10 +10427,10 @@ ts-pnp@^1.1.6:
   resolved "https://packages.atlassian.com/api/npm/npm-remote/ts-pnp/-/ts-pnp-1.2.0.tgz#a500ad084b0798f1c3071af391e65912c86bca92"
   integrity sha1-pQCtCEsHmPHDBxrzkeZZEshrypI=
 
-ts-toolbelt@^6.4.2:
-  version "6.9.4"
-  resolved "https://packages.atlassian.com/api/npm/npm-remote/ts-toolbelt/-/ts-toolbelt-6.9.4.tgz#cc3a070d99c557c552b4f69e36f13d430c47a760"
-  integrity sha1-zDoHDZnFV8VStPaeNvE9QwxHp2A=
+ts-toolbelt@^6.9.4:
+  version "6.9.9"
+  resolved "https://packages.atlassian.com/api/npm/npm-remote/ts-toolbelt/-/ts-toolbelt-6.9.9.tgz#e6cfd8ec7d425d2a06bda3b4fe9577ceaf2abda8"
+  integrity sha1-5s/Y7H1CXSoGvaO0/pV3zq8qvag=
 
 tslib@^1.0.0, tslib@^1.10.0, tslib@^1.11.2, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.13.0"

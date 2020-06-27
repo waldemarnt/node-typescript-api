@@ -26,7 +26,6 @@ async function client(endpoint, { body, ...customConfig } = {}) {
     .fetch(`${API_URL}/${endpoint}`, config) // TODO -> ${process.env.SURF_APP_API_URL}
     .then(async (r) => {
       const data = await r.json();
-      console.log(data);
       if (
         (r.status === 401 && !r.url.includes('users/authenticate')) ||
         (r.status === 404 && r.url.includes('users/me'))

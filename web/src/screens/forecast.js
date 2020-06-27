@@ -45,9 +45,10 @@ function RegisterBeachForm({ onSubmit, submitButton, styles }) {
         ...styles,
       }}
     >
-      <h4 css={{ fontWeight: '500' }}>Add new beach</h4>
+      {/* <h4 css={{ fontWeight: '500' }}>Add new beach</h4> */}
       <form
         onSubmit={handleSubmit}
+        autocomplete="off"
         css={{
           backgroundColor: '#eee',
           padding: '1em',
@@ -132,8 +133,8 @@ function ForecastScreen() {
 
   return (
     <>
-      <div css={{ display: 'flex' }}>
-        <div css={{ width: beaches ? '60%' : '100%' }}>
+      <div css={{ display: beaches ? 'flex' : 'block' }}>
+        {forecast.length ? (<div css={{ width: beaches ? '60%' : '100%' }}>
           <ListForecast
             forecast={forecast}
             filterListItems={(li) =>
@@ -141,11 +142,15 @@ function ForecastScreen() {
               new Date(li.time).getHours() !== 0
             }
           />
-        </div>
+        </div>) : (<span css={{
+          display: 'inline-block',
+          padding: '.5em',
+          marginBottom: '2em',
+        }}>No beaches added yet, let's start!</span>)}
         <RegisterBeachForm
           styles={{
-            width: '40%',
-            paddingLeft: '2em',
+            width: beaches ? '60%' : '100%',
+            // paddingLeft: '2em',
             alignSelf: 'flex-start',
           }}
           onSubmit={handleAddBeach}

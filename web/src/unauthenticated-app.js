@@ -36,6 +36,7 @@ function Form({ type, onSubmit, submitButton }) {
   return (
     <form
       onSubmit={handleSubmit}
+      autocomplete="off"
       css={{
         display: 'flex',
         flexDirection: 'column',

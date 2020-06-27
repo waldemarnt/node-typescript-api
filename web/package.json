@@ -13,7 +13,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-error-boundary": "^1.2.5",
-    "react-query": "^1.2.1",
+    "react-query": "^2.0.3",
     "react-query-devtools": "^1.1.5",
     "react-router": "^6.0.0-alpha.3",
     "react-router-dom": "^6.0.0-alpha.3",

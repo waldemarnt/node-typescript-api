@@ -39,11 +39,13 @@ const defaultMutationOptions = {
   onError: (err, variables, recover) =>
     typeof recover === 'function' ? recover() : null,
   onSuccess: () => {
-    queryCache.refetchQueries('forecast');
-    queryCache.refetchQueries('beaches');
+    // queryCache.refetchQueries('forecast');
+    // queryCache.refetchQueries('beaches');
+    queryCache.invalidateQueries('forecast');
+    queryCache.invalidateQueries('beaches');
   },
-  useErrorBoundary: false,
-  throwOnError: true,
+  // useErrorBoundary: false,
+  // throwOnError: true,
 };
 
 function useAddBeachToForecast(options) {

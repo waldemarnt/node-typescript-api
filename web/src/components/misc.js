@@ -10,7 +10,7 @@ import MD5 from '../utils/md5';
 const ContentWrapper = ({ children }) => (
   <main
     css={{
-      width: '1200px',
+      maxWidth: '1200px',
       // minHeight: '100vh',
       margin: '0 auto',
       display: 'grid',
@@ -238,6 +238,7 @@ function ErrorMessage({ error, ...props }) {
     <div
       role="alert"
       css={{
+        zIndex: '10',
         position: 'absolute',
         bottom: 0,
         left: 0,
@@ -751,6 +752,7 @@ const Header = ({ logout, user }) => (
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
+      marginBottom: '2em'
     }}
   >
     <Logo
