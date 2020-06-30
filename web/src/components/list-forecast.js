@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment */
 import { jsx } from '@emotion/core';
 import React from 'react';
-import { Section, Star, Arrow, Table } from './misc';
+import { Aside, SectionForecastList, Star, Arrow, Table } from './misc';
 
 function ListForecast({ forecast, filterListItems }) {
   const [hour, setHour] = React.useState(null);
@@ -83,15 +83,15 @@ function ListForecast({ forecast, filterListItems }) {
   });
 
   return (
-    <Section>
-      <aside
+    <SectionForecastList>
+      <Aside
         css={{
           padding: '2em',
           textAlign: 'center',
         }}
       >
         {timeSelection}
-      </aside>
+      </Aside>
       <Table>
         <thead>
           <tr>
@@ -127,7 +127,7 @@ function ListForecast({ forecast, filterListItems }) {
             ))}
         </tbody>
       </Table>
-    </Section>
+    </SectionForecastList>
   );
 }
 export { ListForecast };

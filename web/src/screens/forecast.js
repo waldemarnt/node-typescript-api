@@ -16,6 +16,8 @@ import {
   PrimaryButton,
   ErrorMessage,
   FullPageLoading,
+  ForecastPanel,
+  MapWrapper,
 } from '../components/misc';
 
 function RegisterBeachForm({ onSubmit, submitButton, styles }) {
@@ -48,7 +50,7 @@ function RegisterBeachForm({ onSubmit, submitButton, styles }) {
       {/* <h4 css={{ fontWeight: '500' }}>Add new beach</h4> */}
       <form
         onSubmit={handleSubmit}
-        autocomplete="off"
+        autoComplete="off"
         css={{
           backgroundColor: '#eee',
           padding: '1em',
@@ -133,8 +135,8 @@ function ForecastScreen() {
 
   return (
     <>
-      <div css={{ display: beaches ? 'flex' : 'block' }}>
-        {forecast.length ? (<div css={{ width: beaches ? '60%' : '100%' }}>
+      <ForecastPanel>
+        {forecast.length ?
           <ListForecast
             forecast={forecast}
             filterListItems={(li) =>
@@ -142,30 +144,19 @@ function ForecastScreen() {
               new Date(li.time).getHours() !== 0
             }
           />
-        </div>) : (<span css={{
+        : (<span css={{
           display: 'inline-block',
           padding: '.5em',
           marginBottom: '2em',
         }}>No beaches added yet, let's start!</span>)}
         <RegisterBeachForm
-          styles={{
-            width: beaches ? '60%' : '100%',
-            // paddingLeft: '2em',
-            alignSelf: 'flex-start',
-          }}
           onSubmit={handleAddBeach}
           submitButton={<PrimaryButton align="right">Add beach</PrimaryButton>}
         />
-      </div>
-      <Map
-        beaches={beaches}
-        styles={{
-          minWidth: '500px',
-          minHeight: '500px',
-          width: '100%',
-          margin: '2em 0',
-        }}
-      />
+      </ForecastPanel>
+      <MapWrapper>
+        <Map beaches={beaches} />
+      </MapWrapper>
     </>
   );
 }

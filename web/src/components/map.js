@@ -26,7 +26,7 @@ function createInfoWindow(e, map, marker, name) {
   infoWindow.open(map, marker);
 }
 
-function Map({ beaches, styles }) {
+function Map({ beaches }) {
   // const listItems = useListItems();
   // const beaches = listItems[0].forecast;
 
@@ -87,7 +87,7 @@ function Map({ beaches, styles }) {
     onMapLoad(window.map);
   }
 
-  return <div css={styles} id="map" />;
+  return <div css={{width: '100%', height: '100%'}} id="map" />;
 }
 
 export { Map };

@@ -6,6 +6,8 @@ import { jsx } from '@emotion/core';
 import { useAuth } from './context/auth-context';
 import { useAsync } from './utils/use-async';
 
+import { FormLogin } from './components/misc';
+
 import {
   AppTitle,
   ArrowRight,
@@ -34,16 +36,7 @@ function Form({ type, onSubmit, submitButton }) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      autocomplete="off"
-      css={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        minHeight: '350px',
-      }}
-    >
+    <FormLogin handleSubmit={handleSubmit}>
       {type === 'register' && (
         <FormField
           theme="login"
@@ -79,7 +72,7 @@ function Form({ type, onSubmit, submitButton }) {
         )}
       </div>
       {isError && <ErrorMessage error={error} />}
-    </form>
+    </FormLogin>
   );
 }
 

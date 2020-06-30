@@ -7,16 +7,78 @@ import { Link as RouterLink } from 'react-router-dom';
 // import * as colors from '../styles/colors';
 import MD5 from '../utils/md5';
 
+const breakpoints = [480, 768, 1024, 1200];
+
+const mq = breakpoints.map(
+  bp => `@media screen and (min-width: ${bp}px)`
+);
+
+const mobileOnly = `@media screen and (max-width: ${breakpoints[0]}px)`;
+
+const colors = {
+  'white': "#fff",
+}
+
+export const MapWrapper = ({children}) => (
+  <div css={{
+    width: '100%',
+    height: '500px',
+    margin: '2em 0',
+  }}>
+    {children}
+  </div>
+);
+
+export const Aside = ({children}) => (
+  <aside css={{
+    padding: '2em 0',
+    textAlign: 'center',
+    [mq[1]]: {
+      padding: '2em'
+    }
+  }}>
+    {children}
+  </aside>
+);
+
+const ForecastPanel = ({children, }) => (
+  <div css={{ 
+      [mq[2]]: {
+        display: 'flex',
+        justifyContent: 'space-between',
+      } 
+    }}>
+    {children}
+  </div>
+)
+const FormLogin = ({children, handleSubmit}) => (
+  <form
+    onSubmit={handleSubmit}
+    autoComplete="off"
+    css={{
+      [mq[0]]: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+      }, 
+      minHeight: '350px',
+    }}>
+    {children}
+  </form>
+)
+
 const ContentWrapper = ({ children }) => (
   <main
     css={{
-      maxWidth: '1200px',
-      // minHeight: '100vh',
-      margin: '0 auto',
-      display: 'grid',
-      backgroundColor: '#fff',
-      padding: '2em',
+      backgroundColor: colors.white,
+      padding: '1em',
       boxSizing: 'border-box',
+      [mq[1]]: {
+        display: 'grid',
+        maxWidth: `${breakpoints[2]}px`,
+        padding: '2em',
+        margin: '0 auto',
+      }
     }}
   >
     {children}
@@ -669,6 +731,20 @@ const Section = ({ children }) => (
   </section>
 );
 
+const SectionForecastList = ({children}) => 
+  <section
+    css={{
+      // [mq[2]]: {
+      //   width: '60%',
+      // },
+      h4: {
+        textTransform: 'uppercase',
+      },
+    }}
+  >
+    {children}
+  </section>;
+
 const Star = ({ stars }) =>
   Array.from({ length: 5 }).map((item, index) => (
     <i
@@ -751,29 +827,47 @@ const Header = ({ logout, user }) => (
     css={{
       display: 'flex',
       justifyContent: 'space-between',
-      alignItems: 'center',
-      marginBottom: '2em'
+      [mq[1]]: {
+        alignItems: 'center',
+        marginBottom: '2em'
+      },
     }}
   >
     <Logo
       styles={{
         width: '5em',
         height: '5em',
-        margin: '1em 0',
+        [mq[1]]: {
+          margin: '1em 0',
+        }
       }}
     />
     <div
       css={{
         display: 'flex',
-        // alignItems: 'center',
+        [mobileOnly]: {
+          textAlign: 'right',
+          flexDirection: 'row-reverse',
+        },
       }}
     >
       <img
         alt=""
         src={`https://www.gravatar.com/avatar/${MD5(user.email)}`}
-        css={{ width: '50px', height: '50px', borderRadius: '50%' }}
+        css={{ 
+          width: '50px', 
+          height: '50px', 
+          borderRadius: '50%',
+          [mobileOnly]: {
+            marginLeft: '.5em'
+          }
+        }}
       />
-      <div css={{ marginLeft: '.5em' }}>
+      <div css={{ 
+        [mq[1]]: {
+          marginLeft: '.5em' 
+        }
+        }}>
         <span css={{ lineHeight: '1.5' }}>hey, {user.name}!</span>
         <span
           css={{
@@ -808,6 +902,7 @@ const Header = ({ logout, user }) => (
 );
 
 export {
+  FormLogin,
   Arrow,
   AppTitle,
   ArrowRight,
@@ -827,10 +922,12 @@ export {
   SubtleButton,
   SelectField,
   Section,
+  SectionForecastList,
   Star,
   Table,
   Wrapper,
   Footer,
   ContentWrapper,
   Header,
+  ForecastPanel,
 };
