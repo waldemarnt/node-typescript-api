@@ -8,6 +8,7 @@ import {
   Header,
   FullPageErrorFallback,
   ContentWrapper,
+  Footer,
 } from './components/misc';
 import { useAuth } from './context/auth-context';
 import { ForecastScreen } from './screens/forecast';
@@ -20,6 +21,10 @@ function AuthenticatedApp() {
       <ContentWrapper>
         <Header user={user} logout={logout} />
         <AppRoutes />
+        <Footer>
+          <div>Made with <span role="img" aria-label="emoji man surfer">🏄🏽‍♂️</span> + <span role="img" aria-label="emoji blue heart">💙</span> by <a href="https://walde.co/" target="_blank" rel="noopener noreferrer">walde.co</a></div>
+          <a href="https://www.youtube.com/user/waldemaneto" target="_blank" rel="noopener noreferrer">Youtube</a>
+        </Footer>
       </ContentWrapper>
     </ErrorBoundary>
   );

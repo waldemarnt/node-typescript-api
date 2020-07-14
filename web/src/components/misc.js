@@ -41,11 +41,11 @@ export const Aside = ({children}) => (
   </aside>
 );
 
-const ForecastPanel = ({children, }) => (
+const ForecastPanel = ({children}) => (
   <div css={{ 
       [mq[2]]: {
-        display: 'flex',
-        justifyContent: 'space-between',
+        // display: 'flex',
+        // justifyContent: 'space-between',
       } 
     }}>
     {children}
@@ -90,6 +90,7 @@ function FormField({
   name,
   label,
   type,
+  pattern,
   required,
   inline,
   placeholder,
@@ -143,6 +144,7 @@ function FormField({
             outline: 'none',
           },
         }}
+        pattern={pattern}
         required={required}
         onFocus={() => setActive(true)}
         onBlur={(e) =>
@@ -189,6 +191,7 @@ function SelectField({ id, name, label, inline, theme, options }) {
       <select
         id={id}
         name={name}
+        required
         css={{
           backgroundColor: theme === 'login' ? 'transparent' : '#fff',
           border: 'none',
@@ -197,6 +200,9 @@ function SelectField({ id, name, label, inline, theme, options }) {
           height: '2.5em',
           marginTop: '.5em',
           width: '100%',
+          ':invalid': {
+            color: '#666',
+          },
           ':focus': {
             outline: 'none',
             backgroundColor:
@@ -206,6 +212,7 @@ function SelectField({ id, name, label, inline, theme, options }) {
         // onFocus={() => setActive(true)}
         // onChange={(e) => e.target.value.length ? setActive(true) : setActive(false)}
       >
+        <option value="" disabled selected>Position</option>
         {options.map((option) => (
           <option value={option[0]}>{option}</option>
         ))}
@@ -281,18 +288,40 @@ const VisuallyHidden = ({ children }) => (
   </span>
 );
 
-const Footer = ({ children }) => (
+export const Footer = ({ children }) => (
   <footer
     css={{
-      padding: '2em',
-      backgroundColor: '#FFF',
-      borderTop: '1px solid',
-      marginTop: 'auto',
-    }}
-  >
+      textTransform: 'lowercase',
+      fontSize: '.75em',
+      color: '#626066',
+      borderTop: '1px solid #020392',
+      paddingTop: '2em',
+      marginTop: '2em',
+      display: 'flex',
+      lineHeight: '1',
+      alignItems: 'center',
+      '& > a': {
+        borderLeft: '1px solid #626066',
+        marginLeft: '.5em',
+        paddingLeft: '.5em',
+      },
+    }}>
     {children}
   </footer>
-);
+)
+
+// const Footer = ({ children }) => (
+//   <footer
+//     css={{
+//       padding: '2em',
+//       backgroundColor: '#FFF',
+//       borderTop: '1px solid',
+//       marginTop: 'auto',
+//     }}
+//   >
+//     {children}
+//   </footer>
+// );
 
 function ErrorMessage({ error, ...props }) {
   const [isActive, setIsActive] = useState(true);
@@ -484,7 +513,47 @@ const FullPageLoading = ({ caption, styles }) => (
       ...styles,
     }}
   >
-    <svg
+    <AnimatedLogo />
+    <pre>{caption}</pre>
+  </div>
+);
+
+export const Loading = ({ caption, styles }) => (
+  <div
+    css={{
+      textAlign: 'center',
+      color: '#F2D546',
+      'svg': {
+        height: '4em',
+      },
+      // display: 'flex',
+      // flexDirection: 'column',
+      // alignItems: 'center',
+      // justifyContent: 'center',
+      position: 'absolute',
+      // top: '0',
+      left: '0',
+      width: '100%',
+      // height: '100%',
+      ...styles,
+    }}
+  >
+    <svg viewBox="0 0 100 100" enable-background="new 0 0 0 0">
+      <circle fill="currentColor" stroke="none" cx="6" cy="50" r="6">
+      <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.1"></animate>
+      </circle>
+      <circle fill="currentColor" stroke="none" cx="26" cy="50" r="6">
+      <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.2"></animate>
+      </circle>
+      <circle fill="currentColor" stroke="none" cx="46" cy="50" r="6">
+      <animate attributeName="opacity" dur="1s" values="0;1;0" repeatCount="indefinite" begin="0.3"></animate>
+      </circle>
+    </svg>
+  </div>
+);
+
+const AnimatedLogo = () => (
+  <svg
       viewBox="0 0 512 512"
       css={{
         backgroundImage:
@@ -603,8 +672,6 @@ const FullPageLoading = ({ caption, styles }) => (
       <path d="M255.997,339.853c-4.519,0-8.182,3.663-8.182,8.182v63.254c0,4.519,3.663,8.182,8.182,8.182  c4.519,0,8.182-3.663,8.182-8.182v-63.254C264.179,343.516,260.516,339.853,255.997,339.853z" />
       <path d="M191.721,214.044c-17.814,40.986-28.985,84.745-32.927,129.921c-0.393,4.501,2.938,8.47,7.44,8.863  c4.513,0.396,8.47-2.939,8.863-7.44c6.635-76.06,34.553-147.965,80.899-208.619c19.608,25.671,36.057,53.585,48.965,83.118  c22.217,50.842,33.482,104.985,33.482,160.926c0,2.39-0.021,4.78-0.061,7.16c-0.109,6.329-0.38,12.854-0.803,19.396  c-0.292,4.509,3.126,8.403,7.636,8.695c0.18,0.012,0.359,0.017,0.537,0.017c4.278,0,7.877-3.324,8.158-7.653  c0.441-6.799,0.722-13.587,0.836-20.174c0.043-2.473,0.063-4.956,0.063-7.44c0-57.945-11.623-114.042-34.541-166.756  c17.801-17.32,27.905-41.062,27.905-66.063c0-50.826-41.35-92.176-92.176-92.176s-92.176,41.35-92.176,92.176  C163.821,172.996,173.922,196.732,191.721,214.044z M255.997,72.183c41.803,0,75.812,34.009,75.812,75.812  c0,18.579-6.802,36.303-18.914,50.064c-13.765-28.319-30.708-55.065-50.524-79.677c-1.554-1.929-3.897-3.05-6.375-3.05  c-2.477,0-4.82,1.123-6.373,3.051c-19.952,24.785-36.854,51.496-50.54,79.653c-12.102-13.751-18.897-31.465-18.897-50.04  C180.185,106.192,214.194,72.183,255.997,72.183z" />
     </svg>
-    <pre>{caption}</pre>
-  </div>
 );
 
 const ArrowRight = () => (
@@ -734,9 +801,8 @@ const Section = ({ children }) => (
 const SectionForecastList = ({children}) => 
   <section
     css={{
-      // [mq[2]]: {
-      //   width: '60%',
-      // },
+      position: 'relative',
+      paddingBottom: '2em',
       h4: {
         textTransform: 'uppercase',
       },
@@ -827,9 +893,9 @@ const Header = ({ logout, user }) => (
     css={{
       display: 'flex',
       justifyContent: 'space-between',
+      marginBottom: '2em',
       [mq[1]]: {
         alignItems: 'center',
-        marginBottom: '2em'
       },
     }}
   >
@@ -926,7 +992,6 @@ export {
   Star,
   Table,
   Wrapper,
-  Footer,
   ContentWrapper,
   Header,
   ForecastPanel,

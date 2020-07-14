@@ -2,9 +2,9 @@
 /** @jsxFrag React.Fragment */
 import { jsx } from '@emotion/core';
 import React from 'react';
-import { Aside, SectionForecastList, Star, Arrow, Table } from './misc';
+import { Aside, SectionForecastList, Star, Arrow, Loading, Table} from './misc';
 
-function ListForecast({ forecast, filterListItems }) {
+function ListForecast({ forecast, filterListItems, isLoading }) {
   const [hour, setHour] = React.useState(null);
 
   const listItems = forecast.filter(filterListItems).slice(0, 5);
@@ -127,6 +127,8 @@ function ListForecast({ forecast, filterListItems }) {
             ))}
         </tbody>
       </Table>
+      {isLoading? <Loading styles={{
+      }}/> : null}
     </SectionForecastList>
   );
 }

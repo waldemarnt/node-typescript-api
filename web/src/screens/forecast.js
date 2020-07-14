@@ -2,6 +2,7 @@
 /** @jsxFrag React.Fragment **/
 import React from 'react';
 import { jsx } from '@emotion/core';
+import { useIsFetching } from 'react-query'
 import { ListForecast } from '../components/list-forecast';
 import {
   useAddBeachToForecast,
@@ -18,6 +19,7 @@ import {
   FullPageLoading,
   ForecastPanel,
   MapWrapper,
+  SuccessMessage,
 } from '../components/misc';
 
 function RegisterBeachForm({ onSubmit, submitButton, styles }) {
@@ -72,6 +74,7 @@ function RegisterBeachForm({ onSubmit, submitButton, styles }) {
           name="lat"
           placeholder="-23.000372"
           required={true}
+          pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$"
         />
         <FormField
           inline
@@ -81,6 +84,7 @@ function RegisterBeachForm({ onSubmit, submitButton, styles }) {
           name="lng"
           placeholder="-43.365894"
           required={true}
+          pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$"
         />
         <SelectField
           inline
@@ -110,6 +114,7 @@ function ForecastScreen() {
   const beaches = useBeaches();
   const [handleAddBeach] = useAddBeachToForecast();
   const { forecast, status, error } = useForecast();
+  const isFetching = useIsFetching()
   const isError = status === 'error';
 
   if (status === 'loading') {
@@ -136,23 +141,20 @@ function ForecastScreen() {
   return (
     <>
       <ForecastPanel>
+        <RegisterBeachForm
+          onSubmit={handleAddBeach}
+          submitButton={<PrimaryButton align="right">Add beach</PrimaryButton>}
+        />
         {forecast.length ?
           <ListForecast
             forecast={forecast}
+            isLoading={isFetching}
             filterListItems={(li) =>
               new Date(li.time).getHours() % 6 === 0 &&
               new Date(li.time).getHours() !== 0
             }
           />
-        : (<span css={{
-          display: 'inline-block',
-          padding: '.5em',
-          marginBottom: '2em',
-        }}>No beaches added yet, let's start!</span>)}
-        <RegisterBeachForm
-          onSubmit={handleAddBeach}
-          submitButton={<PrimaryButton align="right">Add beach</PrimaryButton>}
-        />
+        : <SuccessMessage message="No beaches added yet, let's start!"/>}
       </ForecastPanel>
       <MapWrapper>
         <Map beaches={beaches} />
