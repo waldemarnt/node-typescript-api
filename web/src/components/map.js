@@ -1,9 +1,7 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 import { jsx } from '@emotion/core';
-// import React from 'react';
 import { render } from 'react-dom';
-import InfoWindow from './info-window';
 
 let infoWindow = null;
 
@@ -12,13 +10,12 @@ window.map = undefined;
 function createInfoWindow(e, map, marker, name) {
   infoWindow = new window.google.maps.InfoWindow({
     content: '<div id="infoWindow" />',
-    // position: { lat: e.latLng.lat(), lng: e.latLng.lng()},
     maxWidth: 200,
   });
 
   infoWindow.addListener('domready', (e) => {
     render(
-      <InfoWindow title={name} content="" />,
+      <span>{name}</span>,
       document.getElementById('infoWindow')
     );
   });
@@ -27,9 +24,6 @@ function createInfoWindow(e, map, marker, name) {
 }
 
 function Map({ beaches }) {
-  // const listItems = useListItems();
-  // const beaches = listItems[0].forecast;
-
   if (!beaches) return null;
 
   const { lat, lng } = beaches[0];
@@ -87,7 +81,7 @@ function Map({ beaches }) {
     onMapLoad(window.map);
   }
 
-  return <div css={{width: '100%', height: '100%'}} id="map" />;
+  return <div id="map" />;
 }
 
 export { Map };
