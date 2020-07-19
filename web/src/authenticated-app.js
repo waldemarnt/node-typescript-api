@@ -4,15 +4,10 @@ import { jsx } from '@emotion/core';
 
 import { Routes, Route } from 'react-router-dom';
 import ErrorBoundary from 'react-error-boundary';
-import {
-  Header,
-  FullPageErrorFallback,
-  ContentWrapper,
-  Footer,
-} from './components/misc';
+import { Header, FullPageErrorFallback, ContentWrapper, Footer } from './components/lib';
+
 import { useAuth } from './context/auth-context';
 import { ForecastScreen } from './screens/forecast';
-import { NotFoundScreen } from './screens/not-found';
 
 function AuthenticatedApp() {
   const { user, logout } = useAuth();
@@ -22,7 +17,8 @@ function AuthenticatedApp() {
         <Header user={user} logout={logout} />
         <AppRoutes />
         <Footer>
-          <div>Made with <span role="img" aria-label="emoji man surfer">🏄🏽‍♂️</span> + <span role="img" aria-label="emoji blue heart">💙</span> by <a href="https://walde.co/" target="_blank" rel="noopener noreferrer">walde.co</a></div>
+          Made with <span role="img" aria-label="emoji man surfer"> 🏄🏽‍♂️ </span> + <span role="img" aria-label="emoji blue heart"> 💙 </span> 
+           by <a href="https://walde.co/" target="_blank" rel="noopener noreferrer">walde.co</a>
           <a href="https://www.youtube.com/user/waldemaneto" target="_blank" rel="noopener noreferrer">Youtube</a>
         </Footer>
       </ContentWrapper>
@@ -33,9 +29,7 @@ function AuthenticatedApp() {
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/forecast" element={<ForecastScreen />} />
-      <Route path="/" element={<ForecastScreen />} />
-      <Route path="*" element={<NotFoundScreen />} />
+      <Route path="*" element={<ForecastScreen />} />
     </Routes>
   );
 }

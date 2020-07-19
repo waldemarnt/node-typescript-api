@@ -1,3 +1,6 @@
+* + * {
+  box-sizing: border-box;
+}
 body {
   min-height: 100%;
   padding: 0;
@@ -8,4 +11,34 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #020392;
+}
+
+fieldset {
+  padding: 1.5em .5em .5em;
+  margin: .5em 0;
+  border: none;
+}
+
+input, select {
+  background-color: transparent;
+  border: none;
+  line-height: 2;
+  padding: .25em;
+  width: 100%;
+}
+
+select {
+  height: 2.5em;
+}            
+
+input:focus,
+select:focus {
+  outline: none;
+}
+
+button {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
 }

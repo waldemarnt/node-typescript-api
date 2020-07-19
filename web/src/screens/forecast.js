@@ -11,16 +11,7 @@ import {
 } from '../utils/forecast-hooks';
 import { useAsync } from '../utils/use-async';
 import { Map } from '../components/map';
-import {
-  FormField,
-  SelectField,
-  PrimaryButton,
-  ErrorMessage,
-  FullPageLoading,
-  ForecastPanel,
-  MapWrapper,
-  SuccessMessage,
-} from '../components/misc';
+import { Button, BeachFormField, BeachFormInput, BeachFormSelect, Flag, FullPageLoading, MapWrapper } from '../components/lib';
 
 function RegisterBeachForm({ onSubmit, submitButton, styles }) {
   const { isLoading, isError, error, run } = useAsync();
@@ -58,42 +49,21 @@ function RegisterBeachForm({ onSubmit, submitButton, styles }) {
           padding: '1em',
         }}
       >
-        <FormField
-          label="Beach name"
-          id="name"
-          type="text"
-          name="name"
-          placeholder="Barra da Tijuca"
-          required={true}
-        />
-        <FormField
-          inline
-          label="Latitude"
-          id="lat"
-          type="text"
-          name="lat"
-          placeholder="-23.000372"
-          required={true}
-          pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$"
-        />
-        <FormField
-          inline
-          label="Longitude"
-          id="lng"
-          type="text"
-          name="lng"
-          placeholder="-43.365894"
-          required={true}
-          pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$"
-        />
-        <SelectField
-          inline
-          label="Position"
-          id="position"
-          type="select"
-          options={['North', 'South', 'East', 'West']}
-          name="position"
-        />
+        <BeachFormField label="Beach name" block>
+          <BeachFormInput label="Beach name" type="text" placeholder="Barra da Tijuca"/>
+        </BeachFormField>
+        <BeachFormField label="Latitude">
+          <BeachFormInput label="Latitude" type="text" placeholder="-23.000372" pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$"/>
+        </BeachFormField>
+        <BeachFormField label="Longitude">
+          <BeachFormInput label="Longitude" type="text" placeholder="-43.365894" pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$"/>
+        </BeachFormField>
+        <BeachFormField label="Position">
+          <BeachFormSelect
+            label="Position"
+            options={['North', 'South', 'East', 'West']}
+          />
+        </BeachFormField>
 
         <div css={{ display: 'flex', justifyContent: 'center' }}>
           {React.cloneElement(
@@ -104,7 +74,7 @@ function RegisterBeachForm({ onSubmit, submitButton, styles }) {
               : [submitButton.props.children])
           )}
         </div>
-        {isError ? <ErrorMessage error={error} /> : null}
+        {isError ? <Flag type="error" message={error.message} /> : null}
       </form>
     </div>
   );
@@ -131,19 +101,19 @@ function ForecastScreen() {
       <>
         <RegisterBeachForm
           onSubmit={handleAddBeach}
-          submitButton={<PrimaryButton align="right">Add beach</PrimaryButton>}
+          submitButton={<Button>Add beach</Button>}
         />
-        <ErrorMessage error={error} />
+        <Flag message={error.message} type="text" />
       </>
     );
   }
 
   return (
     <>
-      <ForecastPanel>
+      <div>
         <RegisterBeachForm
           onSubmit={handleAddBeach}
-          submitButton={<PrimaryButton align="right">Add beach</PrimaryButton>}
+          submitButton={<Button>Add beach</Button>}
         />
         {forecast.length ?
           <ListForecast
@@ -154,8 +124,8 @@ function ForecastScreen() {
               new Date(li.time).getHours() !== 0
             }
           />
-        : <SuccessMessage message="No beaches added yet, let's start!"/>}
-      </ForecastPanel>
+        : <Flag message="No beaches added yet, let's start!"/>}
+      </div>
       <MapWrapper>
         <Map beaches={beaches} />
       </MapWrapper>

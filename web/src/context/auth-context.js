@@ -6,7 +6,7 @@ import {
   Cover,
   FullPageErrorFallback,
   FullPageLoading,
-} from '../components/misc';
+} from '../components/lib';
 
 const AuthContext = React.createContext();
 AuthContext.displayName = 'AuthContext';

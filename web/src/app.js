@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useAuth } from './context/auth-context';
-import { FullPageLoading } from './components/misc';
+import { FullPageLoading } from './components/lib';
 
 const AuthenticatedApp = React.lazy(() =>
   import(/* webpackPrefetch: true */ './authenticated-app')

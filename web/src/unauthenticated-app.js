@@ -6,19 +6,7 @@ import { jsx } from '@emotion/core';
 import { useAuth } from './context/auth-context';
 import { useAsync } from './utils/use-async';
 
-import { FormLogin } from './components/misc';
-
-import {
-  AppTitle,
-  ArrowRight,
-  Cover,
-  Wrapper,
-  FormField,
-  Logo,
-  PrimaryButton,
-  SubtleButton,
-  ErrorMessage,
-} from './components/misc';
+import { Button, formLoginStyles, Cover, Field, Flag, SubtleButton, UnAuthenticatedLogo, UnAuthenticatedWrapper } from './components/lib';
 
 function Form({ type, onSubmit, submitButton }) {
   const { isLoading, isError, error, run } = useAsync();
@@ -36,95 +24,56 @@ function Form({ type, onSubmit, submitButton }) {
   }
 
   return (
-    <FormLogin handleSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      autoComplete="off"
+      css={formLoginStyles}
+    >
       {type === 'register' && (
-        <FormField
-          theme="login"
-          label="Username"
-          id="username"
-          type="text"
-          name="username"
-        />
+        <Field label='Username' type='text' />
       )}
-      <FormField
-        theme="login"
-        label="Email"
-        id="email"
-        type="email"
-        name="email"
-        required={true}
-      />
-      <FormField
-        theme="login"
-        label="Password"
-        id="password"
-        type="password"
-        name="password"
-        required={true}
-      />
-      <div css={{ marginTop: 'auto', marginBottom: '1em' }}>
-        {React.cloneElement(
-          submitButton,
-          { type: 'submit', isLoading },
-          ...(Array.isArray(submitButton.props.children)
-            ? submitButton.props.children
-            : [submitButton.props.children])
-        )}
-      </div>
-      {isError && <ErrorMessage error={error} />}
-    </FormLogin>
+      <Field label="Email" type="email" />
+      <Field label="Password" type="password" />
+      {React.cloneElement(
+        submitButton,
+        { type: 'submit', isLoading, disabled: isLoading },
+        ...(Array.isArray(submitButton.props.children)
+          ? submitButton.props.children
+          : [submitButton.props.children])
+      )}
+      {isError && <Flag type="error" message={error} />}
+    </form>
   );
 }
 
 function UnauthenticatedApp() {
-  const [activeForm, setActiveForm] = useState('login');
+  const [isLoginActive, setLoginActive] = useState(true);
   const { login, register } = useAuth();
 
   return (
     <Cover>
-      <Wrapper
-        styles={{
-          minWidth: '20em',
-          maxWidth: '90%',
-          paddingTop: '5em',
-        }}
-      >
-        <Logo
-          styles={{
-            position: 'absolute',
-            top: '0',
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-        <AppTitle />
-        {activeForm === 'login' ? (
+      <UnAuthenticatedWrapper>
+        <UnAuthenticatedLogo />
+        {isLoginActive ? (
           <>
             <Form
               type="login"
               onSubmit={login}
-              submitButton={
-                <PrimaryButton>
-                  Login <ArrowRight />
-                </PrimaryButton>
-              }
+              submitButton={<Button>Login</Button>}
             />
-            <SubtleButton onClick={() => setActiveForm('register')}>
-              create an account
-            </SubtleButton>
+            <SubtleButton handleOnClick={() => setLoginActive(false)}>Create an account</SubtleButton>
           </>
         ) : (
           <>
             <Form
               type="register"
               onSubmit={register}
-              submitButton={<PrimaryButton>Register</PrimaryButton>}
+              submitButton={<Button>Register</Button>}
             />
-            <SubtleButton onClick={() => setActiveForm('login')}>
-              sign in
-            </SubtleButton>
+            <SubtleButton handleOnClick={() => setLoginActive(true)}>Sign in</SubtleButton>
           </>
         )}
-      </Wrapper>
+      </UnAuthenticatedWrapper>
     </Cover>
   );
 }

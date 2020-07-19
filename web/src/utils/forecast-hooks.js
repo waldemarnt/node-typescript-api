@@ -18,7 +18,6 @@ function readForecast() {
 }
 
 function useForecast({ onSuccess, ...options } = {}) {
-  // not using error boundary, solve error here TODO:
   const { data: forecast, status, error } = useQuery({
     queryKey: 'forecast',
     queryFn: readForecast,
@@ -39,13 +38,9 @@ const defaultMutationOptions = {
   onError: (err, variables, recover) =>
     typeof recover === 'function' ? recover() : null,
   onSuccess: () => {
-    // queryCache.refetchQueries('forecast');
-    // queryCache.refetchQueries('beaches');
     queryCache.invalidateQueries('forecast');
     queryCache.invalidateQueries('beaches');
   },
-  // useErrorBoundary: false,
-  // throwOnError: true,
 };
 
 function useAddBeachToForecast(options) {
