@@ -27,7 +27,7 @@ Principais tecnologias utilizadas no código.
 ## Como o código é estraturado
 -----
 
-O código esta estrururado em branches para cada um dos capitulos. Para comparar as mudanças entre um capitulo e outro utilize a opção *Compare* do Github para ver
+O código esta estrururado em branches para cada um dos capitulos. Para comparar as mudanças entre um capitulo e outro utilize a opção [Compare](https://github.com/waldemarnt/node-typescript-api/compare/step1...step2) do Github para ver
 as mudanças lado a lada.
 
 ## Como rodar a pagina web
