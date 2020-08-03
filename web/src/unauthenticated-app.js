@@ -6,7 +6,16 @@ import { jsx } from '@emotion/core';
 import { useAuth } from './context/auth-context';
 import { useAsync } from './utils/use-async';
 
-import { Button, formLoginStyles, Cover, Field, Flag, SubtleButton, UnAuthenticatedLogo, UnAuthenticatedWrapper } from './components/lib';
+import {
+  Button,
+  formLoginStyles,
+  Cover,
+  Field,
+  Flag,
+  SubtleButton,
+  UnAuthenticatedLogo,
+  UnAuthenticatedWrapper,
+} from './components/lib';
 
 function Form({ type, onSubmit, submitButton }) {
   const { isLoading, isError, error, run } = useAsync();
@@ -24,14 +33,8 @@ function Form({ type, onSubmit, submitButton }) {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      autoComplete="off"
-      css={formLoginStyles}
-    >
-      {type === 'register' && (
-        <Field label='Username' type='text' />
-      )}
+    <form onSubmit={handleSubmit} autoComplete="off" css={formLoginStyles}>
+      {type === 'register' && <Field label="Username" type="text" />}
       <Field label="Email" type="email" />
       <Field label="Password" type="password" />
       {React.cloneElement(
@@ -61,7 +64,9 @@ function UnauthenticatedApp() {
               onSubmit={login}
               submitButton={<Button>Login</Button>}
             />
-            <SubtleButton handleOnClick={() => setLoginActive(false)}>Create an account</SubtleButton>
+            <SubtleButton handleOnClick={() => setLoginActive(false)}>
+              Create an account
+            </SubtleButton>
           </>
         ) : (
           <>
@@ -70,7 +75,9 @@ function UnauthenticatedApp() {
               onSubmit={register}
               submitButton={<Button>Register</Button>}
             />
-            <SubtleButton handleOnClick={() => setLoginActive(true)}>Sign in</SubtleButton>
+            <SubtleButton handleOnClick={() => setLoginActive(true)}>
+              Sign in
+            </SubtleButton>
           </>
         )}
       </UnAuthenticatedWrapper>

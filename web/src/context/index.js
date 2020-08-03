@@ -4,7 +4,6 @@ import { ReactQueryConfigProvider } from 'react-query';
 import { AuthProvider } from './auth-context';
 
 const queryConfig = {
-  // TODO: fix config for mutations
   queries: {
     useErrorBoundary: false,
     refetchOnWindowFocus: false,
@@ -15,7 +14,7 @@ const queryConfig = {
   },
   mutations: {
     throwOnError: false,
-    useErrorBoundary: false, // falls back to suspense
+    useErrorBoundary: false,
   },
 };
 

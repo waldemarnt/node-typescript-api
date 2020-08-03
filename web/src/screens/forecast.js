@@ -2,7 +2,7 @@
 /** @jsxFrag React.Fragment **/
 import React from 'react';
 import { jsx } from '@emotion/core';
-import { useIsFetching } from 'react-query'
+import { useIsFetching } from 'react-query';
 import { ListForecast } from '../components/list-forecast';
 import {
   useAddBeachToForecast,
@@ -11,7 +11,15 @@ import {
 } from '../utils/forecast-hooks';
 import { useAsync } from '../utils/use-async';
 import { Map } from '../components/map';
-import { Button, BeachFormField, BeachFormInput, BeachFormSelect, Flag, FullPageLoading, MapWrapper } from '../components/lib';
+import {
+  Button,
+  BeachFormField,
+  BeachFormInput,
+  BeachFormSelect,
+  Flag,
+  FullPageLoading,
+  MapWrapper,
+} from '../components/lib';
 
 function RegisterBeachForm({ onSubmit, submitButton, styles }) {
   const { isLoading, isError, error, run } = useAsync();
@@ -40,7 +48,6 @@ function RegisterBeachForm({ onSubmit, submitButton, styles }) {
         ...styles,
       }}
     >
-      {/* <h4 css={{ fontWeight: '500' }}>Add new beach</h4> */}
       <form
         onSubmit={handleSubmit}
         autoComplete="off"
@@ -50,13 +57,27 @@ function RegisterBeachForm({ onSubmit, submitButton, styles }) {
         }}
       >
         <BeachFormField label="Beach name" block>
-          <BeachFormInput label="Beach name" type="text" placeholder="Barra da Tijuca"/>
+          <BeachFormInput
+            label="Beach name"
+            type="text"
+            placeholder="Barra da Tijuca"
+          />
         </BeachFormField>
         <BeachFormField label="Latitude">
-          <BeachFormInput label="Latitude" type="text" placeholder="-23.000372" pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$"/>
+          <BeachFormInput
+            label="Latitude"
+            type="text"
+            placeholder="-23.000372"
+            pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$"
+          />
         </BeachFormField>
         <BeachFormField label="Longitude">
-          <BeachFormInput label="Longitude" type="text" placeholder="-43.365894" pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$"/>
+          <BeachFormInput
+            label="Longitude"
+            type="text"
+            placeholder="-43.365894"
+            pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$"
+          />
         </BeachFormField>
         <BeachFormField label="Position">
           <BeachFormSelect
@@ -84,7 +105,7 @@ function ForecastScreen() {
   const beaches = useBeaches();
   const [handleAddBeach] = useAddBeachToForecast();
   const { forecast, status, error } = useForecast();
-  const isFetching = useIsFetching()
+  const isFetching = useIsFetching();
   const isError = status === 'error';
 
   if (status === 'loading') {
@@ -115,7 +136,7 @@ function ForecastScreen() {
           onSubmit={handleAddBeach}
           submitButton={<Button>Add beach</Button>}
         />
-        {forecast.length ?
+        {forecast.length ? (
           <ListForecast
             forecast={forecast}
             isLoading={isFetching}
@@ -124,7 +145,9 @@ function ForecastScreen() {
               new Date(li.time).getHours() !== 0
             }
           />
-        : <Flag message="No beaches added yet, let's start!"/>}
+        ) : (
+          <Flag message="No beaches added yet, let's start!" />
+        )}
       </div>
       <MapWrapper>
         <Map beaches={beaches} />

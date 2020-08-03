@@ -2,9 +2,10 @@
 /** @jsxFrag React.Fragment */
 import { jsx } from '@emotion/core';
 import { render } from 'react-dom';
+import { GMAPS_API_KEY } from '../config';
+import { Flag } from './lib';
 
 let infoWindow = null;
-
 window.map = undefined;
 
 function createInfoWindow(e, map, marker, name) {
@@ -14,17 +15,20 @@ function createInfoWindow(e, map, marker, name) {
   });
 
   infoWindow.addListener('domready', (e) => {
-    render(
-      <span>{name}</span>,
-      document.getElementById('infoWindow')
-    );
+    render(<span>{name}</span>, document.getElementById('infoWindow'));
   });
 
   infoWindow.open(map, marker);
 }
 
-function Map({ beaches }) {
-  if (!beaches) return null;
+export const Map = ({ beaches }) => {
+  if (!GMAPS_API_KEY) {
+    return <Flag type="error" message="Missing GMAPS_API_KEY at `config.js`" />
+  }
+  
+  if (!beaches || !beaches.length) {
+    return null;
+  }
 
   const { lat, lng } = beaches[0];
   const zoom = 10;
@@ -35,12 +39,11 @@ function Map({ beaches }) {
   };
 
   if (!window.google) {
-    var s = document.createElement('script');
+    const s = document.createElement('script');
     s.type = 'text/javascript';
-    s.src = `https://maps.google.com/maps/api/js?key=AIzaSyBB854Viw6N2qgak_TT-C91kHKky82POYw`;
-    var x = document.getElementsByTagName('script')[0];
+    s.src = `https://maps.google.com/maps/api/js?key=${GMAPS_API_KEY}`;
+    const x = document.getElementsByTagName('script')[0];
     x.parentNode.insertBefore(s, x);
-    //can't access google.maps until it's finished loading
     s.addEventListener('load', (e) => {
       onScriptLoad();
     });
@@ -50,6 +53,8 @@ function Map({ beaches }) {
 
   function onMapLoad(map) {
     const markers = [];
+    const bounds = new window.google.maps.LatLngBounds();
+
     beaches.forEach((beach, i) => {
       const { lat, lng, name } = beach;
       const marker = new window.google.maps.Marker({
@@ -62,15 +67,13 @@ function Map({ beaches }) {
         if (infoWindow) {
           infoWindow.close();
         }
-
         createInfoWindow(e, map, marker, name);
       });
     });
-    const bounds = new window.google.maps.LatLngBounds();
+
     markers.forEach((marker) => bounds.extend(marker.getPosition()));
     map.setCenter(bounds.getCenter());
-
-    map.fitBounds(bounds); // https://stackoverflow.com/questions/19304574/center-set-zoom-of-map-to-cover-all-visible-markers
+    map.fitBounds(bounds);
   }
 
   function onScriptLoad() {
@@ -82,6 +85,4 @@ function Map({ beaches }) {
   }
 
   return <div id="map" />;
-}
-
-export { Map };
+};

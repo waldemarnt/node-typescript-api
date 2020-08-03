@@ -1,8 +1,17 @@
 /** @jsx jsx */
 /** @jsxFrag React.Fragment */
 import { jsx } from '@emotion/core';
-import React from 'react';
-import { Arrow, Aside,Loading, SectionForecastList, Star, SunriseSVG, Table, SelectTimeButton } from './lib';
+import React, { Fragment } from 'react';
+import {
+  Arrow,
+  Aside,
+  Loading,
+  SectionForecastList,
+  Star,
+  SunriseSVG,
+  Table,
+  SelectTimeButton,
+} from './lib';
 
 function ListForecast({ forecast, filterListItems, isLoading }) {
   const [hour, setHour] = React.useState(null);
@@ -41,12 +50,15 @@ function ListForecast({ forecast, filterListItems, isLoading }) {
       newDay = false;
     }
     return (
-      <>
+      <Fragment key={itemHour}>
         {newDay && <SunriseSVG />}
-        <SelectTimeButton isActive={itemHour === hour} handleClick={() => setHour(itemHour)} key={itemHour}>
+        <SelectTimeButton
+          isActive={itemHour === hour}
+          handleClick={() => setHour(itemHour)}
+        >
           {forecastList[itemHour].time}h
         </SelectTimeButton>
-      </>
+      </Fragment>
     );
   });
 
@@ -88,7 +100,7 @@ function ListForecast({ forecast, filterListItems, isLoading }) {
             ))}
         </tbody>
       </Table>
-      {isLoading? <Loading /> : null}
+      {isLoading ? <Loading /> : null}
     </SectionForecastList>
   );
 }

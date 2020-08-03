@@ -1,5 +1,3 @@
-import '@reach/dialog/styles.css';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './app';

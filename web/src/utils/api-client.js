@@ -22,25 +22,23 @@ async function client(endpoint, { body, ...customConfig } = {}) {
   if (!API_URL) {
     throw new Error('API URL NOT FOUND!');
   }
-  return window
-    .fetch(`${API_URL}/${endpoint}`, config) // TODO -> ${process.env.SURF_APP_API_URL}
-    .then(async (r) => {
-      const data = await r.json();
-      if (
-        (r.status === 401 && !r.url.includes('users/authenticate')) ||
-        (r.status === 404 && r.url.includes('users/me'))
-      ) {
-        logout();
-        window.location.assign(window.location); // refresh page
-        return Promise.reject({ message: 'Please re-authenticate.' });
-      }
+  return window.fetch(`${API_URL}/${endpoint}`, config).then(async (r) => {
+    const data = await r.json();
+    if (
+      (r.status === 401 && !r.url.includes('users/authenticate')) ||
+      (r.status === 404 && r.url.includes('users/me'))
+    ) {
+      logout();
+      window.location.assign(window.location); // refresh page
+      return Promise.reject({ message: 'Please re-authenticate.' });
+    }
 
-      if (r.ok) {
-        return data;
-      } else {
-        return Promise.reject(data);
-      }
-    });
+    if (r.ok) {
+      return data;
+    } else {
+      return Promise.reject(data);
+    }
+  });
 }
 
 function logout() {
