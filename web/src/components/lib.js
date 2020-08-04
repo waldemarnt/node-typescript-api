@@ -109,7 +109,7 @@ export function BeachFormField({ label, block, children }) {
       }}
     >
       <label
-        htmlFor={label.toLowerCase()}
+        htmlFor={label.split(" ").join("").toLowerCase()}
         css={{
           textTransform: 'uppercase',
           marginBottom: '.5em',
@@ -126,8 +126,8 @@ export function BeachFormField({ label, block, children }) {
 export const BeachFormInput = ({ type, label, pattern, placeholder }) => (
   <input
     type={type}
-    id={label.toLowerCase()}
-    name={label.toLowerCase()}
+    id={label.split(" ").join("").toLowerCase()}
+    name={label.split(" ").join("").toLowerCase()}
     css={{ backgroundColor: color.white }}
     pattern={pattern}
     required
@@ -137,10 +137,10 @@ export const BeachFormInput = ({ type, label, pattern, placeholder }) => (
 
 export const BeachFormSelect = ({ label, options }) => (
   <select
-    id={label.toLowerCase()}
-    name={label.toLowerCase()}
+    id={label.split(" ").join("").toLowerCase()}
+    name={label.split(" ").join("").toLowerCase()}
     required
-    defaultValue="initial"
+    defaultValue=""
     css={{
       backgroundColor: color.white,
       marginTop: '.5em',
@@ -149,11 +149,11 @@ export const BeachFormSelect = ({ label, options }) => (
       },
     }}
   >
-    <option key="position" value="initial" disabled>
+    <option key="position" value="" disabled selected>
       Position
     </option>
     {options.map((option) => (
-      <option key={option.toLowerCase()} value={option[0]}>
+      <option key={option.split(" ").join("").toLowerCase()} value={option[0]}>
         {option}
       </option>
     ))}
@@ -286,8 +286,8 @@ export function Flag({ type, message }) {
         left: 0,
         margin: '1em',
         padding: '2em',
-        backgroundColor: type === 'error' ? color.red : color.green,
-        color: color.white,
+        backgroundColor: type === 'error' ? color.red : type === 'alert' ? color.yellow : color.green,
+        color: type === 'alert' ? color.darkGrey : color.white,
         animation: 'show 1s',
         '@keyframes show': {
           from: {
@@ -304,9 +304,9 @@ export function Flag({ type, message }) {
           position: 'absolute',
           top: 0,
           right: 0,
-          color: color.white,
+          color: type === 'alert' ? color.darkGrey : color.white,
           fontSize: '1.5em',
-          backgroundColor: type === 'error' ? color.red : color.green,
+          backgroundColor: type === 'error' ? color.red : type === 'alert' ? color.yellow : color.green,
         }}
         onClick={() => setActive(false)}
       >

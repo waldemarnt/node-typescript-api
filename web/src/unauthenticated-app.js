@@ -44,7 +44,7 @@ function Form({ type, onSubmit, submitButton }) {
           ? submitButton.props.children
           : [submitButton.props.children])
       )}
-      {isError && <Flag type="error" message={error} />}
+      {isError && <Flag type="error" message={error.message} />}
     </form>
   );
 }

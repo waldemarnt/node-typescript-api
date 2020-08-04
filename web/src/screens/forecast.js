@@ -24,14 +24,17 @@ import {
 function RegisterBeachForm({ onSubmit, submitButton, styles }) {
   const { isLoading, isError, error, run } = useAsync();
 
+  console.log(isError, error)
+
   function handleSubmit(event) {
     event.preventDefault();
-    const { name, lat, lng, position } = event.target.elements;
+    const { beachname, latitude, longitude, position } = event.target.elements;
+    
     run(
       onSubmit({
-        name: name.value,
-        lat: parseFloat(lat.value),
-        lng: parseFloat(lng.value),
+        name: beachname.value,
+        lat: parseFloat(latitude.value),
+        lng: parseFloat(longitude.value),
         position: position.value,
       })
     );
@@ -146,7 +149,7 @@ function ForecastScreen() {
             }
           />
         ) : (
-          <Flag message="No beaches added yet, let's start!" />
+          <Flag type="alert" message="No beaches added yet, let's start!" />
         )}
       </div>
       <MapWrapper>
