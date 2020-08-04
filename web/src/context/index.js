@@ -13,7 +13,7 @@ const queryConfig = {
     retry: false,
   },
   mutations: {
-    throwOnError: false,
+    throwOnError: true,
     useErrorBoundary: false,
   },
 };

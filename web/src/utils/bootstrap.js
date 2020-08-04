@@ -4,7 +4,7 @@ async function bootstrapAppData() {
 
   if (auth.isLoggedIn()) {
     appData = {
-      user: await auth.getUser()
+      user: await auth.getUser(),
     };
   }
 

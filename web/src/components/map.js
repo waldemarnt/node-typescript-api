@@ -23,9 +23,9 @@ function createInfoWindow(e, map, marker, name) {
 
 export const Map = ({ beaches }) => {
   if (!GMAPS_API_KEY) {
-    return <Flag type="error" message="Missing GMAPS_API_KEY at `config.js`" />
+    return <Flag type="error" message="Missing GMAPS_API_KEY at `config.js`" />;
   }
-  
+
   if (!beaches || !beaches.length) {
     return null;
   }

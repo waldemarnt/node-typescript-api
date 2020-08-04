@@ -24,12 +24,10 @@ import {
 function RegisterBeachForm({ onSubmit, submitButton, styles }) {
   const { isLoading, isError, error, run } = useAsync();
 
-  console.log(isError, error)
-
   function handleSubmit(event) {
     event.preventDefault();
     const { beachname, latitude, longitude, position } = event.target.elements;
-    
+
     run(
       onSubmit({
         name: beachname.value,
@@ -92,7 +90,7 @@ function RegisterBeachForm({ onSubmit, submitButton, styles }) {
         <div css={{ display: 'flex', justifyContent: 'center' }}>
           {React.cloneElement(
             submitButton,
-            { type: 'submit', isLoading },
+            { type: 'submit', isLoading, disabled: isLoading },
             ...(Array.isArray(submitButton.props.children)
               ? submitButton.props.children
               : [submitButton.props.children])
