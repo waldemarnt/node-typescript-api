@@ -8,6 +8,7 @@ Durante o curso é criado uma API para calcular a melhor condição de surf entr
 A imagem abaixo mostra o resultado final do curso com a pagina web mostrando todos os dados que vem da API construida durante o curso.👌
 
 ![Exemplo pagina web](https://i.ibb.co/qp2jtLk/Screen-Shot-2020-07-18-at-10-42-39-am.png)
+[(Tutorial para executar a pagina web)](https://github.com/waldemarnt/node-typescript-api/tree/master/web)
 
 ## Tecnologias utilizadas
 ----
@@ -32,23 +33,7 @@ as mudanças lado a lada.
 
 ## Como rodar a pagina web
 ----
-Para rodar a pagina web navegue para a [pasta /web](https://github.com/waldemarnt/node-typescript-api/tree/master/web) neste repositório e então altere o [arquivo de configuração](https://github.com/waldemarnt/node-typescript-api/blob/master/web/src/config.js) para apontar para
-a sua API. Exemplo:
+🔗[Clique aqui para ver como rodar a página web.](https://github.com/waldemarnt/node-typescript-api/tree/master/web)
 
-```
-export const API_URL = 'http://localhost:3000';
-```
-
-Após isso instale as dependencias:
-
-```
-yarn install
-```
-
-E inicie a aplicação
-
-```
-yarn start
-```
-
-Uma nova aba no browser deve abrir. 
+## Como contribuir
+Em Construção (mas abra um Pull Request de qualquer maneira xD)
