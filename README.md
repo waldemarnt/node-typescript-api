@@ -34,3 +34,6 @@ as mudanças lado a lada.
 ## Como rodar a pagina web
 ----
 [Clique aqui para ver como rodar a página web.](https://github.com/waldemarnt/node-typescript-api/tree/master/web)
+
+## Como contribuir
+Em Construção (mas abra um Pull Request de qualquer maneira xD)
