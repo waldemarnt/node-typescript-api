@@ -56,8 +56,22 @@ describe('Beaches functional tests', () => {
       });
     });
 
-    it.skip('should return 500 when there is any error other than validation error', async () => {
-      //TODO think in a way to throw a 500
+    it('should return 500 when there is any error other than validation error', async () => {
+      jest
+        .spyOn(Beach.prototype, 'save')
+        .mockImplementationOnce(() => Promise.reject('fail to create beach'));
+      const newBeach = {
+        lat: 'invalid_string',
+        lng: 46.43243,
+        name: 'Ubatuba',
+        position: 'E',
+      };
+
+      const response = await global.testRequest.post('/beaches').send(newBeach);
+      expect(response.status).toBe(500);
+      expect(response.body).toEqual({
+        error: 'internal server error',
+      });
     });
   });
 });
