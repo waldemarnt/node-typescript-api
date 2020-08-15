@@ -61,16 +61,21 @@ describe('Beaches functional tests', () => {
         .spyOn(Beach.prototype, 'save')
         .mockImplementationOnce(() => Promise.reject('fail to create beach'));
       const newBeach = {
-        lat: 'invalid_string',
+        lat: -33.792726,
         lng: 46.43243,
-        name: 'Ubatuba',
+        name: 'Manly',
         position: 'E',
       };
 
-      const response = await global.testRequest.post('/beaches').send(newBeach);
+      const response = await global.testRequest
+        .post('/beaches')
+        .send(newBeach)
+        .set({ 'x-access-token': token });
       expect(response.status).toBe(500);
       expect(response.body).toEqual({
-        error: 'internal server error',
+        code: 500,
+        error: 'Server Error',
+        message: 'Something went wrong!',
       });
     });
   });
