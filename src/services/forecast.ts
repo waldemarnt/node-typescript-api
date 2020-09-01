@@ -1,11 +1,13 @@
-import _ from 'lodash';
 import { StormGlass, ForecastPoint } from '@src/clients/stormGlass';
 import { InternalError } from '@src/util/errors/internal-error';
 import { Beach } from '@src/models/beach';
 import logger from '@src/logger';
 import { Rating } from './rating';
+import orderByCustomProp from '@src/util/orderByCustomProp';
 
-export interface BeachForecast extends Omit<Beach, 'user'>, ForecastPoint {}
+export interface BeachForecast extends Omit<Beach, 'user'>, ForecastPoint {
+  rating: number;
+}
 
 export interface TimeForecast {
   time: string;
@@ -34,7 +36,9 @@ export class Forecast {
         time: t.time,
         // TODO Allow ordering to be dynamic
         // Sorts the beaches by its ratings
-        forecast: _.orderBy(t.forecast, ['rating'], ['desc']),
+        forecast: t.forecast.sort((curr, next) =>
+          orderByCustomProp<Omit<BeachForecast, '_id'>>(curr, next, 'rating')
+        ),
       }));
     } catch (error) {
       throw new ForecastProcessingInternalError(error.message);
@@ -44,13 +48,17 @@ export class Forecast {
   private async calculateRating(beaches: Beach[]): Promise<BeachForecast[]> {
     const pointsWithCorrectSources: BeachForecast[] = [];
     logger.info(`Preparing the forecast for ${beaches.length} beaches`);
-    for (const beach of beaches) {
-      const rating = new this.RatingService(beach);
-      //TODO someone to make this call in parallel
-      const points = await this.stormGlass.fetchPoints(beach.lat, beach.lng);
-      const enrichedBeachData = this.enrichBeachData(points, beach, rating);
-      pointsWithCorrectSources.push(...enrichedBeachData);
-    }
+    const points: ForecastPoint[][] = await Promise.all(
+      beaches.map((beach) => this.stormGlass.fetchPoints(beach.lat, beach.lng))
+    );
+
+    points.forEach((point: ForecastPoint[], index: number) => {
+      const ratingService = new this.RatingService(beaches[index]);
+      pointsWithCorrectSources.push(
+        ...this.enrichBeachData(point, beaches[index], ratingService)
+      );
+    });
+
     return pointsWithCorrectSources;
   }
 
