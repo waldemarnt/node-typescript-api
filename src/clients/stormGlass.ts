@@ -2,6 +2,7 @@ import { InternalError } from '@src/util/errors/internal-error';
 import config, { IConfig } from 'config';
 // Another way to have similar behaviour to TS namespaces
 import * as HTTPUtil from '@src/util/request';
+import { TimeUtil } from '@src/util/time';
 
 export interface StormGlassPointSource {
   [key: string]: number;
@@ -76,14 +77,16 @@ export class StormGlass {
 
   constructor(protected request = new HTTPUtil.Request()) {}
 
+  //TODO someone to cache this call
   public async fetchPoints(lat: number, lng: number): Promise<ForecastPoint[]> {
+    const endTimestamp = TimeUtil.getUnixTimeForAFutureDay(1);
     try {
       const response = await this.request.get<StormGlassForecastResponse>(
         `${stormglassResourceConfig.get(
           'apiUrl'
         )}/weather/point?lat=${lat}&lng=${lng}&params=${
           this.stormGlassAPIParams
-        }&source=${this.stormGlassAPISource}`,
+        }&source=${this.stormGlassAPISource}&end=${endTimestamp}`,
         {
           headers: {
             Authorization: stormglassResourceConfig.get('apiToken'),
