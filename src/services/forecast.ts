@@ -3,7 +3,7 @@ import { InternalError } from '@src/util/errors/internal-error';
 import { Beach } from '@src/models/beach';
 import logger from '@src/logger';
 import { Rating } from './rating';
-import orderByCustomProp from '@src/util/orderByCustomProp';
+import orderByCustomProp, { Ordination } from '@src/util/orderByCustomProp';
 
 export interface BeachForecast extends Omit<Beach, 'user'>, ForecastPoint {
   rating: number;
@@ -27,17 +27,28 @@ export class Forecast {
   ) {}
 
   public async processForecastForBeaches(
-    beaches: Beach[]
+    beaches: Beach[],
+    {
+      customProp,
+      ordination,
+    }: {
+      customProp: keyof Omit<BeachForecast, '_id'>;
+      ordination: Ordination;
+    } = {
+      customProp: 'rating',
+      ordination: Ordination.DESC,
+    }
   ): Promise<TimeForecast[]> {
     try {
       const beachForecast = await this.calculateRating(beaches);
       const timeForecast = this.mapForecastByTime(beachForecast);
       return timeForecast.map((t) => ({
         time: t.time,
-        // TODO Allow ordering to be dynamic
-        // Sorts the beaches by its ratings
         forecast: t.forecast.sort((curr, next) =>
-          orderByCustomProp<Omit<BeachForecast, '_id'>>(curr, next, 'rating')
+          orderByCustomProp<Omit<BeachForecast, '_id'>>(curr, next, {
+            customProp,
+            ordination,
+          })
         ),
       }));
     } catch (error) {
