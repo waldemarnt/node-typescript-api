@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "yarn build && node dist/src/index.js",
-    "start:local": "ts-node-dev 'src/index.ts' | pino-pretty -c",
+    "start:local": "ts-node-dev --transpile-only 'src/index.ts' | pino-pretty -c",
     "test": "yarn test:unit && yarn test:functional",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
@@ -74,7 +74,7 @@
     "prettier": "^2.0.5",
     "supertest": "^4.0.2",
     "ts-jest": "^26.0.0",
-    "ts-node-dev": "^1.0.0-pre.44",
+    "ts-node-dev": "^1.0.0-pre.61",
     "typescript": "^3.8.3"
   }
 }
