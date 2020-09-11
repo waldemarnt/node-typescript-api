@@ -28,16 +28,15 @@ export class Forecast {
   ) {}
 
   public async processForecastForBeaches(
-    beaches: Beach[]
+    beaches: Beach[],
+    query: 'asc' | 'desc' = 'desc'
   ): Promise<TimeForecast[]> {
     try {
       const beachForecast = await this.calculateRating(beaches);
       const timeForecast = this.mapForecastByTime(beachForecast);
       return timeForecast.map((t) => ({
         time: t.time,
-        // TODO Allow ordering to be dynamic
-        // Sorts the beaches by its ratings
-        forecast: _.orderBy(t.forecast, ['rating'], ['desc']),
+        forecast: _.orderBy(t.forecast, ['rating'], [query]),
       }));
     } catch (error) {
       throw new ForecastProcessingInternalError(error.message);

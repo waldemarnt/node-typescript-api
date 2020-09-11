@@ -41,8 +41,12 @@ export class ForecastController extends BaseController {
     res: Response
   ): Promise<void> {
     try {
+      const { orderBy } = req.query as { orderBy: 'asc' | 'desc' };
       const beaches = await Beach.find({ user: req.decoded?.id });
-      const forecastData = await forecast.processForecastForBeaches(beaches);
+      const forecastData = await forecast.processForecastForBeaches(
+        beaches,
+        orderBy
+      );
       res.status(200).send(forecastData);
     } catch (error) {
       logger.error(error);
