@@ -97,7 +97,7 @@ export class StormGlass {
     return cacheForecastPoints;
   }
 
-  public async getForecastPointsFromApi(
+  protected async getForecastPointsFromApi(
     lat: number,
     lng: number
   ): Promise<ForecastPoint[]> {
@@ -131,7 +131,7 @@ export class StormGlass {
     }
   }
 
-  public getForecastPointsFromCache(
+  protected getForecastPointsFromCache(
     lat: number,
     lng: number
   ): ForecastPoint[] | undefined {
