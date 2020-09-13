@@ -79,18 +79,17 @@ export class StormGlass {
 
   constructor(
     protected request = new HTTPUtil.Request(),
-    protected cacheUtil = CacheUtil,
+    protected cacheUtil = CacheUtil
   ) {}
 
   public async fetchPoints(lat: number, lng: number): Promise<ForecastPoint[]> {
-    const cachedForecastPoints = this.getForecastPointsFromCache(this.getCacheKey(lat, lng));
+    const cachedForecastPoints = this.getForecastPointsFromCache(
+      this.getCacheKey(lat, lng)
+    );
 
     if (!cachedForecastPoints) {
       const forecastPoints = await this.getForecastPointsFromApi(lat, lng);
-      this.setForecastPointsInCache(
-        this.getCacheKey(lat, lng),
-        forecastPoints
-      );
+      this.setForecastPointsInCache(this.getCacheKey(lat, lng), forecastPoints);
       return forecastPoints;
     }
 
@@ -140,14 +139,12 @@ export class StormGlass {
       return;
     }
 
-    logger.info(
-      `Using cache to return forecast points for key: ${key}`
-    );
+    logger.info(`Using cache to return forecast points for key: ${key}`);
     return forecastPointsFromCache;
   }
 
   private getCacheKey(lat: number, lng: number): string {
-    return `forecast_points_${lat}_${lng}`
+    return `forecast_points_${lat}_${lng}`;
   }
 
   private setForecastPointsInCache(
