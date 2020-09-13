@@ -1,6 +1,6 @@
 import NodeCache from 'node-cache';
 
-export class CacheUtil {
+class CacheUtil {
   constructor(protected cacheService = new NodeCache()) {}
 
   // TTL in seconds
@@ -8,9 +8,9 @@ export class CacheUtil {
     return this.cacheService.set(key, value, ttl);
   }
 
-  public get<T>(key: string): T {
-    const value = this.cacheService.get(key);
-
-    return value as T;
+  public get<T>(key: string): T | undefined {
+    return this.cacheService.get<T>(key);
   }
 }
+
+export default new CacheUtil()

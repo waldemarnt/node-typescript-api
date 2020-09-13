@@ -3,7 +3,7 @@ import config, { IConfig } from 'config';
 // Another way to have similar behaviour to TS namespaces
 import * as HTTPUtil from '@src/util/request';
 import { TimeUtil } from '@src/util/time';
-import { CacheUtil } from '@src/util/cache';
+import CacheUtil from '@src/util/cache';
 import logger from '@src/logger';
 
 export interface StormGlassPointSource {
@@ -79,7 +79,7 @@ export class StormGlass {
 
   constructor(
     protected request = new HTTPUtil.Request(),
-    protected cacheUtil = new CacheUtil()
+    protected cacheUtil = CacheUtil,
   ) {}
 
   public async fetchPoints(lat: number, lng: number): Promise<ForecastPoint[]> {

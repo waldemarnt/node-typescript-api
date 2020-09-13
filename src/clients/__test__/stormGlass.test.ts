@@ -2,9 +2,10 @@ import { StormGlass } from '@src/clients/stormGlass';
 import stormglassNormalizedResponseFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
 import * as stormglassWeatherPointFixture from '@test/fixtures/stormglass_weather_3_hours.json';
 import * as HTTPUtil from '@src/util/request';
-import { CacheUtil } from '@src/util/cache';
+import CacheUtil from '@src/util/cache';
 
 jest.mock('@src/util/request');
+jest.mock('@src/util/cache');
 
 describe('StormGlass client', () => {
   /**
@@ -17,7 +18,7 @@ describe('StormGlass client', () => {
    * Used for instance method's mocks
    */
   const mockedRequest = new HTTPUtil.Request() as jest.Mocked<HTTPUtil.Request>;
-  const mockedCache = new CacheUtil() as jest.Mocked<CacheUtil>;
+  const mockedCache = CacheUtil;
   it('should return the normalized forecast from the StormGlass service', async () => {
     const lat = -33.792726;
     const lng = 151.289824;
