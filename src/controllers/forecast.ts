@@ -6,7 +6,7 @@ import {
 } from '@overnightjs/core';
 import { Request, Response } from 'express';
 import { Beach } from '@src/models/beach';
-import { Forecast } from '@src/services/forecast';
+import { BeachForecast, Forecast } from '@src/services/forecast';
 import { authMiddleware } from '@src/middlewares/auth';
 import { BaseController } from '.';
 import logger from '@src/logger';
@@ -44,7 +44,7 @@ export class ForecastController extends BaseController {
       const {
         orderBy,
         orderField,
-      }: { orderBy?: 'asc' | 'desc'; orderField?: string } = req.query;
+      }: { orderBy?: 'asc' | 'desc'; orderField?: keyof BeachForecast } = req.query;
       const beaches = await Beach.find({ userId: req.decoded?.id });
       const forecastData = await forecast.processForecastForBeaches(
         beaches,
