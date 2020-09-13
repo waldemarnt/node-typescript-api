@@ -11,6 +11,10 @@ class CacheUtil {
   public get<T>(key: string): T | undefined {
     return this.cacheService.get<T>(key);
   }
+
+  public clearAllCache(): void {
+    return this.cacheService.flushAll();
+  }
 }
 
-export default new CacheUtil()
+export default new CacheUtil();
