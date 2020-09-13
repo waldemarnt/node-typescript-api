@@ -30,7 +30,7 @@ export class Forecast {
   public async processForecastForBeaches(
     beaches: Beach[],
     orderBy: 'asc' | 'desc' = 'desc',
-    orderField = 'rating'
+    orderField: keyof BeachForecast = 'rating'
   ): Promise<TimeForecast[]> {
     try {
       const beachForecast = await this.calculateRating(beaches);
