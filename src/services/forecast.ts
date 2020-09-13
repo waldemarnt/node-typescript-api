@@ -29,14 +29,15 @@ export class Forecast {
 
   public async processForecastForBeaches(
     beaches: Beach[],
-    query: 'asc' | 'desc' = 'desc'
+    orderBy: 'asc' | 'desc' = 'desc',
+    orderField = 'rating'
   ): Promise<TimeForecast[]> {
     try {
       const beachForecast = await this.calculateRating(beaches);
       const timeForecast = this.mapForecastByTime(beachForecast);
       return timeForecast.map((t) => ({
         time: t.time,
-        forecast: _.orderBy(t.forecast, ['rating'], [query]),
+        forecast: _.orderBy(t.forecast, [orderField], [orderBy]),
       }));
     } catch (error) {
       throw new ForecastProcessingInternalError(error.message);
