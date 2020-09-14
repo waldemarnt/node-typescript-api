@@ -1,6 +1,7 @@
 # Node.js API com Typescript
 -----------
-[![Actions Status](https://github.com/waldemarnt/node-typescript-api/workflows/full-workflow/badge.svg)](https://github.com/waldemarnt/node-typescript-api/actions)
+[![Actions Status](https://github.com/waldemarnt/node-typescript-api/workflows/Complete%20workflow/badge.svg)](https://github.com/waldemarnt/node-typescript-api/actions)
+
 Código do curso 👉 [DO ZERO A PRODUÇÃO: APRENDA A CONSTRUIR UMA API NODE.JS COM TYPESCRIPT](https://www.nodejs-typescript-api.com/curso-gratis)
 
 Durante o curso é criado uma API para calcular a melhor condição de surf entre varias praias, essa API tem como objetivo servir a aplicação [web]() (a aplicação web não
