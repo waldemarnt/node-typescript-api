@@ -48,6 +48,7 @@
     "module-alias": "^2.2.2",
     "moment": "^2.27.0",
     "mongoose": "^5.9.18",
+    "newrelic": "^7.1.0",
     "node-cache": "^5.1.2",
     "pino": "^6.3.2",
     "swagger-ui-express": "^4.1.4"
