@@ -214,7 +214,7 @@
             "name": "orderBy",
             "in": "query",
             "required": false,
-            "schema":{
+            "schema": {
               "$ref": "#/components/schemas/orderBy"
             }
           },
@@ -222,7 +222,7 @@
             "name": "orderField",
             "in": "query",
             "required": false,
-            "schema":{
+            "schema": {
               "$ref": "#/components/schemas/orderField"
             }
           },
@@ -255,7 +255,10 @@
       "orderBy": {
         "type": "string",
         "example": "desc",
-        "enum": ["asc", "desc"],
+        "enum": [
+          "asc",
+          "desc"
+        ],
         "default": "desc"
       },
       "orderField": {
@@ -291,13 +294,18 @@
         "type": "number",
         "example": -10.55
       },
-      "id":{
+      "id": {
         "type": "string",
         "example": "5e8131eba7768d9e4f06c884"
       },
       "beachPosition": {
         "type": "string",
-        "enum": ["N", "S", "W", "E"],
+        "enum": [
+          "N",
+          "S",
+          "W",
+          "E"
+        ],
         "example": "S"
       },
       "forecastPropertyKey": {
@@ -343,12 +351,17 @@
             "$ref": "#/components/schemas/beachPosition"
           }
         },
-        "required": ["name", "lat", "lng", "position"]
+        "required": [
+          "name",
+          "lat",
+          "lng",
+          "position"
+        ]
       },
       "TimeForecast": {
-        "type":"array",
+        "type": "array",
         "items": {
-          "type":"object",
+          "type": "object",
           "properties": {
             "time": {
               "type": "string",
@@ -546,4 +559,3 @@
     }
   }
 }
-
