@@ -16,7 +16,7 @@ export interface Beach {
   userId: string;
 }
 
-const schema = new mongoose.Schema<Beach>(
+const schema = new mongoose.Schema(
   {
     lat: { type: Number, required: true },
     lng: { type: Number, required: true },
