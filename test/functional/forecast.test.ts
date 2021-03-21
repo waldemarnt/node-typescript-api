@@ -2,21 +2,22 @@ import { Beach, GeoPosition } from '@src/models/beach';
 import nock from 'nock';
 import stormGlassWeather3HoursFixture from '../fixtures/stormglass_weather_3_hours.json';
 import apiForecastResponse1BeachFixture from '../fixtures/api_forecast_response_1_beach.json';
-import { User } from '@src/models/user';
 import AuthService from '@src/services/auth';
 import CacheUtil from '@src/util/cache';
+import { UserRepository } from '@src/repository/userRepository';
 
 describe('Beach forecast functional tests', () => {
-  const defaultUser: User = {
+  const defaultUser = {
     name: 'John Doe',
     email: 'john3@mail.com',
     password: '1234',
   };
   let token: string;
   beforeEach(async () => {
+    const userRepository = new UserRepository();
     await Beach.deleteMany({});
-    await User.deleteMany({});
-    const user = await new User(defaultUser).save();
+    await userRepository.deleteAll();
+    const user = await userRepository.create(defaultUser);
     const defaultBeach: Beach = {
       lat: -33.792726,
       lng: 151.289824,

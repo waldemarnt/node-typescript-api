@@ -1,5 +1,5 @@
 import { Beach } from '@src/models/beach';
-import { User } from '@src/models/user';
+import { UserRepository } from '@src/repository/userRepository';
 import AuthService from '@src/services/auth';
 
 describe('Beaches functional tests', () => {
@@ -11,9 +11,10 @@ describe('Beaches functional tests', () => {
 
   let token: string;
   beforeEach(async () => {
+    const userRepository = new UserRepository();
     await Beach.deleteMany({});
-    await User.deleteMany({});
-    const user = await new User(defaultUser).save();
+    await userRepository.deleteAll();
+    const user = await userRepository.create(defaultUser);
     token = AuthService.generateToken(user.id);
   });
 

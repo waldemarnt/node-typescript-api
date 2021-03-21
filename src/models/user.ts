@@ -13,7 +13,7 @@ export enum CUSTOM_VALIDATION {
   DUPLICATED = 'DUPLICATED',
 }
 
-interface UserModel extends Omit<User, '_id'>, Document {}
+export interface UserDocument extends Omit<User, '_id'>, Document { }
 
 const schema = new mongoose.Schema(
   {
@@ -28,7 +28,7 @@ const schema = new mongoose.Schema(
   {
     toJSON: {
       transform: (_, ret): void => {
-        ret.id = ret._id;
+        ret.id = ret._id.toString();
         delete ret._id;
         delete ret.__v;
       },
@@ -48,7 +48,7 @@ schema.path('email').validate(
   CUSTOM_VALIDATION.DUPLICATED
 );
 
-schema.pre<UserModel>('save', async function (): Promise<void> {
+schema.pre<UserDocument>('save', async function (): Promise<void> {
   if (!this.password || !this.isModified('password')) {
     return;
   }
@@ -60,4 +60,4 @@ schema.pre<UserModel>('save', async function (): Promise<void> {
   }
 });
 
-export const User: Model<UserModel> = mongoose.model('User', schema);
+export const User: Model<UserDocument> = mongoose.model('User', schema);
