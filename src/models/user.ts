@@ -3,7 +3,6 @@ import AuthService from '@src/services/auth';
 import logger from '@src/logger';
 
 export interface User {
-  _id?: string;
   name: string;
   email: string;
   password: string;
@@ -13,7 +12,7 @@ export enum CUSTOM_VALIDATION {
   DUPLICATED = 'DUPLICATED',
 }
 
-export interface UserDocument extends Omit<User, '_id'>, Document {}
+export interface UserDocument extends User, Document {}
 
 const schema = new mongoose.Schema(
   {
