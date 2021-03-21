@@ -16,7 +16,7 @@ export class DatabaseInternalError extends DatabaseError {}
 export abstract class DefaultRepository<D, T extends Document> {
   constructor(private model: Model<T>) {}
 
-  async create(data: D): Promise<LeanDocument<T>> {
+  async create(data: Omit<D, 'id'>): Promise<LeanDocument<T>> {
     try {
       const model = new this.model(data);
       const createdData = await model.save();
@@ -32,6 +32,15 @@ export abstract class DefaultRepository<D, T extends Document> {
     try {
       const data = await this.model.findOne(options);
       return data?.toJSON();
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  async find(filter: FilterQuery<T>): Promise<LeanDocument<T>[]> {
+    try {
+      const data = await this.model.find(filter);
+      return data.map((d) => d.toJSON());
     } catch (error) {
       this.handleError(error);
     }

@@ -12,6 +12,7 @@ import { BaseController } from '.';
 import logger from '@src/logger';
 import rateLimit from 'express-rate-limit';
 import ApiError from '@src/util/errors/api-error';
+import { BeachRepository } from '@src/repository/beachRepository';
 
 const forecast = new Forecast();
 
@@ -47,8 +48,8 @@ export class ForecastController extends BaseController {
       }: {
         orderBy?: 'asc' | 'desc';
         orderField?: keyof BeachForecast;
-      } = req.query;
-      const beaches = await Beach.find({ userId: req.context?.userId });
+        } = req.query;
+      const beaches = await new BeachRepository().find({ userId: req.context?.userId });
       const forecastData = await forecast.processForecastForBeaches(
         beaches,
         orderBy,
