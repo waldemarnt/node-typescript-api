@@ -7,20 +7,20 @@ export class DatabaseError extends Error {
     super(message);
   }
 }
-export class DatabaseValidationError extends DatabaseError {}
+export class DatabaseValidationError extends DatabaseError { }
 
-export class DatabaseUnknownClientError extends DatabaseError {}
+export class DatabaseUnknownClientError extends DatabaseError { }
 
-export class DatabaseInternalError extends DatabaseError {}
+export class DatabaseInternalError extends DatabaseError { }
 
-export abstract class DefaultRepository<D, T extends Document> {
-  constructor(private model: Model<T>) {}
+export abstract class DefaultMongoDBRepository<D, T extends Document> {
+  constructor(private model: Model<T>) { }
 
-  async create(data: Omit<D, 'id'>): Promise<LeanDocument<T>> {
+  async create(data: Omit<D, 'id'>): Promise<D> {
     try {
       const model = new this.model(data);
       const createdData = await model.save();
-      return createdData.toJSON();
+      return createdData.toJSON<D>();
     } catch (error) {
       this.handleError(error);
     }
@@ -28,19 +28,19 @@ export abstract class DefaultRepository<D, T extends Document> {
 
   async findOne(
     options: FilterQuery<T>
-  ): Promise<LeanDocument<NonNullable<T>> | undefined> {
+  ): Promise<D | undefined> {
     try {
       const data = await this.model.findOne(options);
-      return data?.toJSON();
+      return data?.toJSON<D>();
     } catch (error) {
       this.handleError(error);
     }
   }
 
-  async find(filter: FilterQuery<T>): Promise<LeanDocument<T>[]> {
+  async find(filter: FilterQuery<T>): Promise<D[]> {
     try {
       const data = await this.model.find(filter);
-      return data.map((d) => d.toJSON());
+      return data.map((d) => d.toJSON<D>());
     } catch (error) {
       this.handleError(error);
     }

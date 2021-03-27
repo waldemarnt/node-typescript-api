@@ -4,7 +4,7 @@ import stormGlassWeather3HoursFixture from '../fixtures/stormglass_weather_3_hou
 import apiForecastResponse1BeachFixture from '../fixtures/api_forecast_response_1_beach.json';
 import AuthService from '@src/services/auth';
 import CacheUtil from '@src/util/cache';
-import { UserRepository } from '@src/repository/userRepository';
+import { UserMongoDBRepository } from '@src/repository/userMongoDBRepository';
 
 describe('Beach forecast functional tests', () => {
   const defaultUser = {
@@ -14,11 +14,11 @@ describe('Beach forecast functional tests', () => {
   };
   let token: string;
   beforeEach(async () => {
-    const userRepository = new UserRepository();
+    const userRepository = new UserMongoDBRepository();
     await Beach.deleteMany({});
     await userRepository.deleteAll();
     const user = await userRepository.create(defaultUser);
-    const defaultBeach: Beach = {
+    const defaultBeach = {
       lat: -33.792726,
       lng: 151.289824,
       name: 'Manly',

@@ -25,7 +25,7 @@ export class Forecast {
   constructor(
     protected stormGlass = new StormGlass(),
     protected RatingService: typeof Rating = Rating
-  ) {}
+  ) { }
 
   public async processForecastForBeaches(
     beaches: Beach[],
@@ -87,6 +87,6 @@ export class Forecast {
         rating: rating.getRateForPoint(point),
       },
       ...point,
-    }));
+    } as any));
   }
 }

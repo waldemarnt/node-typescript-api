@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { Beach } from '@src/models/beach';
 import { authMiddleware } from '@src/middlewares/auth';
 import { BaseController } from '.';
-import { BeachRepository } from '@src/repository/beachRepository';
+import { BeachMongoDBRepository } from '@src/repository/beachMongoDBRepository';
 
 @Controller('beaches')
 @ClassMiddleware(authMiddleware)
@@ -11,7 +11,7 @@ export class BeachesController extends BaseController {
   @Post('')
   public async create(req: Request, res: Response): Promise<void> {
     try {
-      const result = await new BeachRepository().create({
+      const result = await new BeachMongoDBRepository().create({
         ...req.body,
         ...{ userId: req.context?.userId },
       });

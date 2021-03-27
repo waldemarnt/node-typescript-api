@@ -12,7 +12,7 @@ import { BaseController } from '.';
 import logger from '@src/logger';
 import rateLimit from 'express-rate-limit';
 import ApiError from '@src/util/errors/api-error';
-import { BeachRepository } from '@src/repository/beachRepository';
+import { BeachMongoDBRepository } from '@src/repository/beachMongoDBRepository';
 
 const forecast = new Forecast();
 
@@ -48,10 +48,10 @@ export class ForecastController extends BaseController {
       }: {
         orderBy?: 'asc' | 'desc';
         orderField?: keyof BeachForecast;
-        } = req.query;
-      const beaches = await new BeachRepository().find({ userId: req.context?.userId });
+      } = req.query;
+      const beaches = await new BeachMongoDBRepository().find({ userId: req.context?.userId });
       const forecastData = await forecast.processForecastForBeaches(
-        beaches,
+        beaches as any,
         orderBy,
         orderField
       );

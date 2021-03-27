@@ -1,8 +1,8 @@
-import { UserRepository } from '@src/repository/userRepository';
+import { UserMongoDBRepository } from '@src/repository/userMongoDBRepository';
 import AuthService from '@src/services/auth';
 
 describe('Users functional tests', () => {
-  const defaultUserRepository = new UserRepository();
+  const defaultUserRepository = new UserMongoDBRepository();
   beforeEach(async () => {
     await defaultUserRepository.deleteAll();
   });
