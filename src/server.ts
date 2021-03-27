@@ -15,6 +15,8 @@ import { UsersController } from './controllers/users';
 import logger from './logger';
 import apiSchema from './api-schema.json';
 import { apiErrorValidator } from './middlewares/api-error-validator';
+import { BeachMongoDBRepository } from './repository/beachMongoDBRepository';
+import { UserMongoDBRepository } from './repository/userMongoDBRepository';
 
 export class SetupServer extends Server {
   private server?: http.Server;
@@ -63,9 +65,9 @@ export class SetupServer extends Server {
   }
 
   private setupControllers(): void {
-    const forecastController = new ForecastController();
-    const beachesController = new BeachesController();
-    const usersController = new UsersController();
+    const forecastController = new ForecastController(new BeachMongoDBRepository());
+    const beachesController = new BeachesController(new BeachMongoDBRepository());
+    const usersController = new UsersController(new UserMongoDBRepository());
     this.addControllers([
       forecastController,
       beachesController,

@@ -6,7 +6,7 @@ import { Beach } from '@src/models/beach';
 import logger from '@src/logger';
 import { Rating } from './rating';
 
-export interface BeachForecast extends Omit<Beach, 'userId'>, ForecastPoint {
+export interface BeachForecast extends Omit<Beach, 'id' | 'userId'>, ForecastPoint {
   rating: number;
 }
 
@@ -87,6 +87,6 @@ export class Forecast {
         rating: rating.getRateForPoint(point),
       },
       ...point,
-    } as any));
+    }));
   }
 }

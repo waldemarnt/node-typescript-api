@@ -1,6 +1,6 @@
 import logger from '@src/logger';
 import { CUSTOM_VALIDATION } from '@src/models/user';
-import { Document, Error, FilterQuery, LeanDocument, Model } from 'mongoose';
+import { Document, Error, FilterQuery, Model } from 'mongoose';
 
 export class DatabaseError extends Error {
   constructor(message: string) {

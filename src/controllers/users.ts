@@ -3,15 +3,18 @@ import { Response, Request } from 'express';
 import AuthService from '@src/services/auth';
 import { BaseController } from './index';
 import { authMiddleware } from '@src/middlewares/auth';
-import { UserMongoDBRepository } from '@src/repository/userMongoDBRepository';
+import { UserRepository } from '@src/repository';
 
 @Controller('users')
 export class UsersController extends BaseController {
+  constructor(private userRepository: UserRepository) {
+    super();
+  }
+
   @Post('')
   public async create(req: Request, res: Response): Promise<void> {
     try {
-      const userRepository = new UserMongoDBRepository();
-      const newUser = await userRepository.create(req.body);
+      const newUser = await this.userRepository.create(req.body);
       res.status(201).send(newUser);
     } catch (error) {
       this.sendCreateUpdateErrorResponse(res, error);
@@ -20,8 +23,7 @@ export class UsersController extends BaseController {
 
   @Post('authenticate')
   public async authenticate(req: Request, res: Response): Promise<Response> {
-    const userRepository = new UserMongoDBRepository();
-    const user = await userRepository.findOne({ email: req.body.email });
+    const user = await this.userRepository.findOneByEmail(req.body.email);
     if (!user) {
       return this.sendErrorResponse(res, {
         code: 401,
@@ -46,8 +48,13 @@ export class UsersController extends BaseController {
   @Middleware(authMiddleware)
   public async me(req: Request, res: Response): Promise<Response> {
     const userId = req.context?.userId;
-    const userRepository = new UserMongoDBRepository();
-    const user = await userRepository.findOne({ _id: userId });
+    if (!userId) {
+      return this.sendErrorResponse(res, {
+        code: 404,
+        message: `user id not provided`,
+      });
+    }
+    const user = await this.userRepository.findOneById(userId);
     if (!user) {
       return this.sendErrorResponse(res, {
         code: 404,
