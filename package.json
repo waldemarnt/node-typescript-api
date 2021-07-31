@@ -15,6 +15,7 @@
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
     "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
   },
+  { "engines" : { "node" : ">=0.12" } },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/waldemarnt/node-typescript-api.git"
