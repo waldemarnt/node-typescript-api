@@ -1,6 +1,6 @@
 {
   "name": "typescript-api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Complete API built with Node.js and Typescript",
   "main": "index.js",
   "scripts": {
