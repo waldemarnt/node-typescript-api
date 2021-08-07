@@ -3,7 +3,13 @@
 
 name: Complete workflow
 
-on: ['push', 'pull_request']
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
 
@@ -13,7 +19,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [12.x]
         mongodb-version: [4.2]
 
     steps:
@@ -36,20 +42,9 @@ jobs:
     - name: Run all tests
       run: yarn test
 
-    #- shell: bash
-      #if: github.ref == 'refs/heads/master'
-      #name: Create SSH deployment key
-      #env:
-        #SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      #run: ./scripts/deploy.sh
-
-    #- name: Deployment
-      #if: github.ref == 'refs/heads/master'
-      #run: git remote add umbler ssh://git@geonosis.deploy.umbler.com:9922/jy4xooxj/waldemarnt2-com.git && git push umbler master
-      #env:
-        #CI: true
-
-    - uses: akhileshns/heroku-deploy@v3.12.12
+    - name: Deploy application
+      if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
+      uses: akhileshns/heroku-deploy@v3.12.12
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "peaceful-plateau-04699"
