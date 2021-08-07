@@ -16,7 +16,7 @@
     "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
   },
   "postinstall": "yarn build",
-  "engines": { "node": ">=14" },
+  "engines": { "node": ">=12" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/waldemarnt/node-typescript-api.git"
