@@ -3,7 +3,15 @@
 
 name: Complete workflow
 
-on: ['push', 'pull_request']
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
 
 jobs:
 
@@ -15,10 +23,8 @@ jobs:
       matrix:
         node-version: [12.x]
         mongodb-version: [4.2]
-
-    steps:
+  steps:
     - uses: actions/checkout@v2
-    - run: git fetch --prune --unshallow
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
@@ -35,16 +41,3 @@ jobs:
 
     - name: Run all tests
       run: yarn test
-
-    - shell: bash
-      if: github.ref == 'refs/heads/master'
-      name: Create SSH deployment key
-      env:
-        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: ./scripts/deploy.sh
-
-    - name: Deployment
-      if: github.ref == 'refs/heads/master'
-      run: git remote add umbler ssh://git@geonosis.deploy.umbler.com:9922/jy4xooxj/waldemarnt2-com.git && git push umbler master
-      env:
-        CI: true
