@@ -23,21 +23,22 @@ jobs:
       matrix:
         node-version: [12.x]
         mongodb-version: [4.2]
-  steps:
-    - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+    steps:
+      - uses: actions/checkout@v2
 
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.1.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
-      run: yarn --frozen-lockfile
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.1.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
 
-    - name: Run all tests
-      run: yarn test
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Run all tests
+        run: yarn test
