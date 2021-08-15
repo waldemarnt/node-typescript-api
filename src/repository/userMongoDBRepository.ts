@@ -2,7 +2,9 @@ import { DefaultMongoDBRepository } from './defaultMongoDBRepository';
 import { User, UserDocument } from '../models/user';
 import { UserRepository } from '.';
 
-export class UserMongoDBRepository extends DefaultMongoDBRepository<User, UserDocument> implements UserRepository {
+export class UserMongoDBRepository
+  extends DefaultMongoDBRepository<User, UserDocument>
+  implements UserRepository {
   constructor(userModel = User) {
     super(userModel);
   }

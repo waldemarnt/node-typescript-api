@@ -6,7 +6,9 @@ import { Beach } from '@src/models/beach';
 import logger from '@src/logger';
 import { Rating } from './rating';
 
-export interface BeachForecast extends Omit<Beach, 'id' | 'userId'>, ForecastPoint {
+export interface BeachForecast
+  extends Omit<Beach, 'id' | 'userId'>,
+    ForecastPoint {
   rating: number;
 }
 
@@ -25,7 +27,7 @@ export class Forecast {
   constructor(
     protected stormGlass = new StormGlass(),
     protected RatingService: typeof Rating = Rating
-  ) { }
+  ) {}
 
   public async processForecastForBeaches(
     beaches: Beach[],

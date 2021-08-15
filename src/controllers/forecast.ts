@@ -62,7 +62,9 @@ export class ForecastController extends BaseController {
         return;
       }
 
-      const beaches = await this.beachRepository.findAllBeachesForUser(req.context.userId);
+      const beaches = await this.beachRepository.findAllBeachesForUser(
+        req.context.userId
+      );
       const forecastData = await forecast.processForecastForBeaches(
         beaches,
         orderBy,

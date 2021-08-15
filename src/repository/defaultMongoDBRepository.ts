@@ -7,14 +7,14 @@ export class DatabaseError extends Error {
     super(message);
   }
 }
-export class DatabaseValidationError extends DatabaseError { }
+export class DatabaseValidationError extends DatabaseError {}
 
-export class DatabaseUnknownClientError extends DatabaseError { }
+export class DatabaseUnknownClientError extends DatabaseError {}
 
-export class DatabaseInternalError extends DatabaseError { }
+export class DatabaseInternalError extends DatabaseError {}
 
 export abstract class DefaultMongoDBRepository<D, T extends Document> {
-  constructor(private model: Model<T>) { }
+  constructor(private model: Model<T>) {}
 
   async create(data: Omit<D, 'id'>): Promise<D> {
     try {
@@ -26,9 +26,7 @@ export abstract class DefaultMongoDBRepository<D, T extends Document> {
     }
   }
 
-  async findOne(
-    options: FilterQuery<T>
-  ): Promise<D | undefined> {
+  async findOne(options: FilterQuery<T>): Promise<D | undefined> {
     try {
       const data = await this.model.findOne(options);
       return data?.toJSON<D>();

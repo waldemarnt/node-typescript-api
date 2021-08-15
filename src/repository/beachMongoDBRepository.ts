@@ -4,7 +4,9 @@ import { BeachRepository } from '.';
 import { injectable } from 'inversify';
 
 @injectable()
-export class BeachMongoDBRepository extends DefaultMongoDBRepository<Beach, BeachDocument> implements BeachRepository {
+export class BeachMongoDBRepository
+  extends DefaultMongoDBRepository<Beach, BeachDocument>
+  implements BeachRepository {
   constructor(beachModel = Beach) {
     super(beachModel);
   }
