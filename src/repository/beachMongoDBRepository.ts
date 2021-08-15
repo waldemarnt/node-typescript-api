@@ -5,7 +5,7 @@ import { injectable } from 'inversify';
 
 @injectable()
 export class BeachMongoDBRepository extends DefaultMongoDBRepository<Beach, BeachDocument> implements BeachRepository {
-  constructor(private beachModel = Beach) {
+  constructor(beachModel = Beach) {
     super(beachModel);
   }
 

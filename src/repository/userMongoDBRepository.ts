@@ -3,7 +3,7 @@ import { User, UserDocument } from '../models/user';
 import { UserRepository } from '.';
 
 export class UserMongoDBRepository extends DefaultMongoDBRepository<User, UserDocument> implements UserRepository {
-  constructor(private userModel = User) {
+  constructor(userModel = User) {
     super(userModel);
   }
 
