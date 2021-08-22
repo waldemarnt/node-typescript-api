@@ -15,7 +15,9 @@
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
     "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'"
   },
-  "engines": { "node": "12" },
+  "engines": {
+    "node": "14"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/waldemarnt/node-typescript-api.git"
@@ -65,7 +67,7 @@
     "@types/lodash": "^4.14.155",
     "@types/module-alias": "^2.0.0",
     "@types/multer": "^1.4.3",
-    "@types/node": "^13.13.2",
+    "@types/node": "14",
     "@types/pino": "^6.3.0",
     "@types/supertest": "^2.0.9",
     "@types/swagger-ui-express": "^4.1.2",
