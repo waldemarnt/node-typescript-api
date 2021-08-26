@@ -3,6 +3,7 @@ import { Beach, GeoPosition } from '@src/models/beach';
 
 describe('Rating Service', () => {
   const defaultBeach: Beach = {
+    id: 'fake-id1',
     lat: -33.792726,
     lng: 151.289824,
     name: 'Manly',
