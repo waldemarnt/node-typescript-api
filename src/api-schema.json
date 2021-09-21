@@ -111,18 +111,9 @@
     },
     "/users/me": {
       "get": {
+        "security": [{ "apiKey": [] }],
         "description": "Get the profile of the token's owner",
         "operationId": "getUserProfile",
-        "parameters": [
-          {
-            "name": "x-access-token",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/jwtToken"
-            },
-            "required": true
-          }
-        ],
         "responses": {
           "200": {
             "description": "The user information",
@@ -154,18 +145,9 @@
     },
     "/beaches": {
       "post": {
+        "security": [{ "apiKey": [] }],
         "description": "Create a new Beach belonging to the authenticated user",
         "operationId": "createBeach",
-        "parameters": [
-          {
-            "name": "x-access-token",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/jwtToken"
-            },
-            "required": true
-          }
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -207,6 +189,7 @@
     },
     "/forecast": {
       "get": {
+        "security": [{ "apiKey": [] }],
         "description": "Get the list of forecast ordered by the most ranked",
         "operationId": "getForecast",
         "parameters": [
@@ -225,14 +208,6 @@
             "schema":{
               "$ref": "#/components/schemas/orderField"
             }
-          },
-          {
-            "name": "x-access-token",
-            "in": "header",
-            "schema": {
-              "$ref": "#/components/schemas/jwtToken"
-            },
-            "required": true
           }
         ],
         "responses": {
@@ -251,6 +226,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "name": "x-access-token",
+        "in": "header"
+      }
+    },
     "schemas": {
       "orderBy": {
         "type": "string",
