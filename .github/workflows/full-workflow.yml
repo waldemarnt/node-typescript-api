@@ -22,7 +22,17 @@ jobs:
     strategy:
       matrix:
         node-version: [14.x]
-        mongodb-version: [4.2]
+
+    services:
+      mongodb:
+        image: mongo:4.2
+        ports:
+          - 27017
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: actions/checkout@v2
@@ -32,15 +42,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.1.0
-        with:
-          mongodb-version: ${{ matrix.mongodb-version }}
-
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
       - name: Run all tests
+        env:
+          MONGODB_URL: mongodb://localhost:${{ job.services.mongodb.ports[27017] }}/surf-forecast-test
         run: yarn test
 
       - name: Deploy application
