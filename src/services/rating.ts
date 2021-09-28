@@ -49,22 +49,14 @@ export class Rating {
   }
 
   private isWindOffShore(
-    waveDirection: string,
-    windDirection: string
+    waveDirection: GeoPosition,
+    windDirection: GeoPosition
   ): boolean {
     return (
-      (waveDirection === GeoPosition.N &&
-        windDirection === GeoPosition.S &&
-        this.beach.position === GeoPosition.N) ||
-      (waveDirection === GeoPosition.S &&
-        windDirection === GeoPosition.N &&
-        this.beach.position === GeoPosition.S) ||
-      (waveDirection === GeoPosition.E &&
-        windDirection === GeoPosition.W &&
-        this.beach.position === GeoPosition.E) ||
-      (waveDirection === GeoPosition.W &&
-        windDirection === GeoPosition.E &&
-        this.beach.position === GeoPosition.W)
+      this.isWaveNorthAndWindSouth(waveDirection, windDirection) ||
+      this.isWaveSouthAndWindNorth(waveDirection, windDirection) ||
+      this.isWaveEastAndWindWest(waveDirection, windDirection) ||
+      this.isWaveWestAndWindEast(waveDirection, windDirection)
     );
   }
 
@@ -94,5 +86,49 @@ export class Rating {
     if (coordinates < 220) return GeoPosition.S;
     if (coordinates < 310) return GeoPosition.W;
     return GeoPosition.N;
+  }
+
+  private isWaveNorthAndWindSouth(
+    wavePosition: GeoPosition,
+    windPosition: GeoPosition
+  ): boolean {
+    return (
+      wavePosition === GeoPosition.N &&
+      windPosition === GeoPosition.S &&
+      this.beach.position === GeoPosition.N
+    );
+  }
+
+  private isWaveSouthAndWindNorth(
+    wavePosition: GeoPosition,
+    windPosition: GeoPosition
+  ): boolean {
+    return (
+      wavePosition === GeoPosition.S &&
+      windPosition === GeoPosition.N &&
+      this.beach.position === GeoPosition.S
+    );
+  }
+
+  private isWaveEastAndWindWest(
+    wavePosition: GeoPosition,
+    windPosition: GeoPosition
+  ): boolean {
+    return (
+      wavePosition === GeoPosition.E &&
+      windPosition === GeoPosition.W &&
+      this.beach.position === GeoPosition.E
+    );
+  }
+
+  private isWaveWestAndWindEast(
+    wavePosition: GeoPosition,
+    windPosition: GeoPosition
+  ): boolean {
+    return (
+      wavePosition === GeoPosition.W &&
+      windPosition === GeoPosition.E &&
+      this.beach.position === GeoPosition.W
+    );
   }
 }
