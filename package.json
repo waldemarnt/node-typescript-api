@@ -36,7 +36,7 @@
   "homepage": "https://github.com/waldemarnt/node-typescript-api#readme",
   "dependencies": {
     "@overnightjs/core": "^1.7.4",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "config": "^3.3.1",
