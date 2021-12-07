@@ -5,6 +5,7 @@ import * as HTTPUtil from '@src/util/request';
 import { TimeUtil } from '@src/util/time';
 import CacheUtil from '@src/util/cache';
 import logger from '@src/logger';
+import { AxiosError } from 'axios';
 
 export interface StormGlassPointSource {
   [key: string]: number;
@@ -115,18 +116,20 @@ export class StormGlass {
         }
       );
       return this.normalizeResponse(response.data);
-    } catch (err) {
+    } catch (err: unknown) {
       /**
        * This is handling the Axios errors specifically
        */
-      if (HTTPUtil.Request.isRequestError(err)) {
+      const axiosError = err as AxiosError;
+      const errorMessage = err as Error;
+      if (axiosError.response && axiosError.response.data) {
         throw new StormGlassResponseError(
-          `Error: ${JSON.stringify(err.response.data)} Code: ${
-            err.response.status
+          `Error: ${JSON.stringify(axiosError.response.data)} Code: ${
+            axiosError.response.status
           }`
         );
       }
-      throw new ClientRequestError(err.message);
+      throw new ClientRequestError(errorMessage.message);
     }
   }
 
