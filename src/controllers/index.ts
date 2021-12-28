@@ -6,7 +6,7 @@ import logger from '@src/logger';
 export abstract class BaseController {
   protected sendCreateUpdateErrorResponse(
     res: Response,
-    error: mongoose.Error.ValidationError | Error
+    error: unknown
   ): void {
     if (error instanceof mongoose.Error.ValidationError) {
       const clientErrors = this.handleClientErrors(error);
@@ -23,7 +23,7 @@ export abstract class BaseController {
     error: mongoose.Error.ValidationError
   ): { code: number; error: string } {
     const duplicatedKindErrors = Object.values(error.errors).filter(
-      (err) => err.kind === CUSTOM_VALIDATION.DUPLICATED
+      (err) => err.name === 'ValidatorError' && err.kind === CUSTOM_VALIDATION.DUPLICATED
     );
     if (duplicatedKindErrors.length) {
       return { code: 409, error: error.message };
