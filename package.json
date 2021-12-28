@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "yarn build && node dist/src/index.js",
-    "start:local": "ts-node-dev 'src/index.ts'",
+    "start:local": "ts-node-dev --transpile-only src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
@@ -32,17 +32,17 @@
     "module-alias": "^2.2.2"
   },
   "devDependencies": {
-    "@types/jest": "^25.2.1",
-    "@types/module-alias": "^2.0.0",
-    "@types/node": "^13.13.2",
-    "@types/supertest": "^2.0.9",
-    "@typescript-eslint/eslint-plugin": "^2.29.0",
-    "@typescript-eslint/parser": "^2.29.0",
-    "eslint": "^6.8.0",
-    "jest": "^26.0.1",
-    "supertest": "^4.0.2",
-    "ts-jest": "^26.0.0",
-    "ts-node-dev": "^1.0.0-pre.44",
-    "typescript": "^3.8.3"
+    "@types/jest": "^27.0.3",
+    "@types/module-alias": "^2.0.1",
+    "@types/node": "16",
+    "@types/supertest": "^2.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.5.0",
+    "jest": "^27.4.5",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.1.2",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.4"
   }
 }
