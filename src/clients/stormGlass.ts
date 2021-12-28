@@ -1,4 +1,4 @@
-import axios, { AxiosStatic } from 'axios';
+import axios, { AxiosError, AxiosStatic } from 'axios';
 import { InternalError } from '@src/util/errors/internal-error';
 
 export interface StormGlassPointSource {
@@ -82,14 +82,20 @@ export class StormGlass {
       /**
        * This is handling the Axios errors specifically
        */
-      if (err.response && err.response.status) {
+      const axiosError = err as AxiosError;
+      if (
+        axiosError instanceof Error &&
+        axiosError.response &&
+        axiosError.response.status
+      ) {
         throw new StormGlassResponseError(
-          `Error: ${JSON.stringify(err.response.data)} Code: ${
-            err.response.status
+          `Error: ${JSON.stringify(axiosError.response.data)} Code: ${
+            axiosError.response.status
           }`
         );
       }
-      throw new ClientRequestError(err.message);
+      // The type is temporary given we will rework it in the upcoming chapters
+      throw new ClientRequestError((err as { message: any }).message);
     }
   }
   private normalizeResponse(
