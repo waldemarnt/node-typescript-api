@@ -99,18 +99,20 @@ describe('StormGlass client', () => {
       }
     }
 
-    mockedRequest.get.mockRejectedValue(new FakeAxiosError({
-      status: 429,
-      data: { errors: ['Rate Limit reached'] },
-    }));
+    mockedRequest.get.mockRejectedValue(
+      new FakeAxiosError({
+        status: 429,
+        data: { errors: ['Rate Limit reached'] },
+      })
+    );
     /**
      * Mock static function return
      */
     MockedRequestClass.isRequestError.mockReturnValue(true);
     MockedRequestClass.extractErrorData.mockReturnValue({
-        status: 429,
-        data: { errors: ['Rate Limit reached'] },
-      });
+      status: 429,
+      data: { errors: ['Rate Limit reached'] },
+    });
 
     MockedCacheUtil.get.mockReturnValue(undefined);
 

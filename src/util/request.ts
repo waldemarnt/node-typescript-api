@@ -13,16 +13,20 @@ export class Request {
   }
 
   public static isRequestError(error: Error): boolean {
-    return !!((error as AxiosError).response && (error as AxiosError).response?.status);
+    return !!(
+      (error as AxiosError).response && (error as AxiosError).response?.status
+    );
   }
 
-  public static extractErrorData(error: unknown): Pick<AxiosResponse, 'data' | 'status'> {
+  public static extractErrorData(
+    error: unknown
+  ): Pick<AxiosResponse, 'data' | 'status'> {
     const axiosError = error as AxiosError;
-    if(axiosError.response && axiosError.response.status) {
+    if (axiosError.response && axiosError.response.status) {
       return {
         data: axiosError.response.data,
-        status: axiosError.response.status
-      }
+        status: axiosError.response.status,
+      };
     }
     throw Error(`The error ${error} is not a Request Error`);
   }

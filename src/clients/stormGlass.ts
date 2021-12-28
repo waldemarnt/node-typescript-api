@@ -119,9 +119,7 @@ export class StormGlass {
       if (err instanceof Error && HTTPUtil.Request.isRequestError(err)) {
         const error = HTTPUtil.Request.extractErrorData(err);
         throw new StormGlassResponseError(
-          `Error: ${JSON.stringify(error.data)} Code: ${
-            error.status
-          }`
+          `Error: ${JSON.stringify(error.data)} Code: ${error.status}`
         );
       }
       /**
