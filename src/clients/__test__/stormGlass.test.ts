@@ -78,14 +78,14 @@ describe('StormGlass client', () => {
     const lat = -33.792726;
     const lng = 151.289824;
 
-    mockedRequest.get.mockRejectedValue({ message: 'Network Error' });
+    mockedRequest.get.mockRejectedValue('Network Error');
 
     MockedCacheUtil.get.mockReturnValue(undefined);
 
     const stormGlass = new StormGlass(mockedRequest, MockedCacheUtil);
 
     await expect(stormGlass.fetchPoints(lat, lng)).rejects.toThrow(
-      'Unexpected error when trying to communicate to StormGlass: Network Error'
+      'Unexpected error when trying to communicate to StormGlass: "Network Error"'
     );
   });
 
@@ -93,16 +93,26 @@ describe('StormGlass client', () => {
     const lat = -33.792726;
     const lng = 151.289824;
 
-    mockedRequest.get.mockRejectedValue({
-      response: {
+    class FakeAxiosError extends Error {
+      constructor(public response: object) {
+        super();
+      }
+    }
+
+    mockedRequest.get.mockRejectedValue(
+      new FakeAxiosError({
         status: 429,
         data: { errors: ['Rate Limit reached'] },
-      },
-    });
+      })
+    );
     /**
      * Mock static function return
      */
     MockedRequestClass.isRequestError.mockReturnValue(true);
+    MockedRequestClass.extractErrorData.mockReturnValue({
+      status: 429,
+      data: { errors: ['Rate Limit reached'] },
+    });
 
     MockedCacheUtil.get.mockReturnValue(undefined);
 
