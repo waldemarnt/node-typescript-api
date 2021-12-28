@@ -30,11 +30,11 @@
     "module-alias": "^2.2.2"
   },
   "devDependencies": {
-    "@types/module-alias": "^2.0.0",
-    "@types/node": "^13.13.2",
-    "@typescript-eslint/eslint-plugin": "^2.29.0",
-    "@typescript-eslint/parser": "^2.29.0",
-    "eslint": "^6.8.0",
-    "typescript": "^3.8.3"
+    "@types/module-alias": "^2.0.1",
+    "@types/node": "16",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
+    "eslint": "^8.5.0",
+    "typescript": "^4.5.4"
   }
 }
