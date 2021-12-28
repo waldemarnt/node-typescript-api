@@ -92,17 +92,18 @@ export class StormGlass {
       );
       return this.normalizeResponse(response.data);
     } catch (err) {
-      /**
-       * This is handling the Axios errors specifically
-       */
-      if (HTTPUtil.Request.isRequestError(err)) {
+      //@Updated 2022 to support Error as unknown
+      //https://devblogs.microsoft.com/typescript/announcing-typescript-4-4/#use-unknown-catch-variables
+      if (err instanceof Error && HTTPUtil.Request.isRequestError(err)) {
+        const error = HTTPUtil.Request.extractErrorData(err);
         throw new StormGlassResponseError(
-          `Error: ${JSON.stringify(err.response.data)} Code: ${
-            err.response.status
-          }`
+          `Error: ${JSON.stringify(error.data)} Code: ${error.status}`
         );
       }
-      throw new ClientRequestError(err.message);
+      /**
+       * All the other errors will fallback to a generic client error
+       */
+      throw new ClientRequestError(JSON.stringify(err));
     }
   }
   private normalizeResponse(
