@@ -4,7 +4,10 @@ import { connect as mongooseConnect, connection } from 'mongoose';
 const dbConfig: IConfig = config.get('App.database');
 
 export const connect = async (): Promise<void> => {
-  await mongooseConnect(dbConfig.get('mongoUrl'));
+  await mongooseConnect(dbConfig.get('mongoUrl'), {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  });
 };
 
 export const close = (): Promise<void> => connection.close();
