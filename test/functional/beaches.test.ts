@@ -52,7 +52,7 @@ describe('Beaches functional tests', () => {
         code: 422,
         error: 'Unprocessable Entity',
         message:
-          'Beach validation failed: lat: Cast to Number failed for value "invalid_string" at path "lat"',
+          'Beach validation failed: lat: Cast to Number failed for value "invalid_string" (type string) at path "lat"',
       });
     });
 
