@@ -37,7 +37,8 @@ export class Forecast {
         forecast: _.orderBy(t.forecast, ['rating'], ['desc']),
       }));
     } catch (error) {
-      throw new ForecastProcessingInternalError(error.message);
+      logger.error(error);
+      throw new ForecastProcessingInternalError((error as Error).message);
     }
   }
 

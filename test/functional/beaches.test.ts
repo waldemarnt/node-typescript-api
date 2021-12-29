@@ -53,7 +53,7 @@ describe('Beaches functional tests', () => {
         code: 400,
         error: 'Bad Request',
         message:
-          'Beach validation failed: lat: Cast to Number failed for value "invalid_string" at path "lat"',
+          'Beach validation failed: lat: Cast to Number failed for value "invalid_string" (type string) at path "lat"',
       });
     });
 
