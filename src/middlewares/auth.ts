@@ -12,6 +12,10 @@ export function authMiddleware(
     req.decoded = decoded;
     next();
   } catch (err) {
-    res.status?.(401).send({ code: 401, error: err.message });
+    if (err instanceof Error) {
+      res.status?.(401).send({ code: 401, error: err.message });
+    } else {
+      res.status?.(401).send({ code: 401, error: 'Unknown auth error' });
+    }
   }
 }
