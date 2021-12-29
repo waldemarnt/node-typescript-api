@@ -21,12 +21,11 @@ jobs:
 
     strategy:
       matrix:
-<<<<<<< HEAD
-        node-version: [14.x]
+        node-version: [16.x]
 
     services:
       mongodb:
-        image: mongo:4.2
+        image: mongo:5.0
         ports:
           - 27017
         options: >-
@@ -34,10 +33,6 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-=======
-        node-version: [16.x]
-        mongodb-version: [5.0]
->>>>>>> chapter9/step3
 
     steps:
       - uses: actions/checkout@v2

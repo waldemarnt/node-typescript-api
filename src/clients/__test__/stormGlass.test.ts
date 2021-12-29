@@ -108,11 +108,6 @@ describe('StormGlass client', () => {
 
     MockedRequestClass.isRequestError.mockReturnValue(true);
 
-//<<<<<<< HEAD
-    //MockedCacheUtil.get.mockReturnValue(undefined);
-
-    //const stormGlass = new StormGlass(mockedRequest, MockedCacheUtil);
-//=======
     MockedRequestClass.extractErrorData.mockReturnValue({
       status: 429,
       data: { errors: ['Rate Limit reached'] },
