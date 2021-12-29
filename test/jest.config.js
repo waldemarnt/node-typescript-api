@@ -7,4 +7,8 @@ module.exports = {...rootConfig, ...{
   displayName: "end2end-tests",
   setupFilesAfterEnv: ["<rootDir>/test/jest-setup.ts"],
   testMatch: ["<rootDir>/test/**/*.test.ts"],
+  transformIgnorePatterns: [
+    '<rootDir>/node_modules/@babel',
+    '<rootDir>/node_modules/@jest',
+  ]
 }}
