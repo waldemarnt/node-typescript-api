@@ -11,7 +11,7 @@
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
     "test:functional": "dotenv -e .env -- jest --projects ./test --runInBand",
-    "test:unit": "dotenv -e .env -- jest --runInBand",
+    "test:unit": "dotenv -e .env -- jest",
     "style:check": "prettier --check src/**/*.ts test/**/*.ts",
     "style:fix": "prettier --write src/**/*.ts' test/**/*.ts"
   },
