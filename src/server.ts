@@ -61,7 +61,7 @@ export class SetupServer extends Server {
           if (err) {
             return reject(err);
           }
-          resolve();
+          resolve(true);
         });
       });
     }
