@@ -61,6 +61,21 @@
                 }
               }
             }
+          },
+          "409": {
+            "description": "Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "message": "Conflict",
+                  "code": "409",
+                  "error": "Conflict"
+                }
+              }
+            }
           }
         }
       }
