@@ -6,7 +6,7 @@ import * as http from 'http';
 import expressPino from 'express-pino-logger';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
-import { OpenApiValidator } from 'express-openapi-validator';
+import * as OpenApiValidator from 'express-openapi-validator';
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import { ForecastController } from './controllers/forecast';
 import * as database from '@src/database';
@@ -55,11 +55,13 @@ export class SetupServer extends Server {
 
   private async docsSetup(): Promise<void> {
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(apiSchema));
-    await new OpenApiValidator({
-      apiSpec: apiSchema as OpenAPIV3.Document,
-      validateRequests: true, //we do it
-      validateResponses: true,
-    }).install(this.app);
+    this.app.use(
+      OpenApiValidator.middleware({
+        apiSpec: apiSchema as OpenAPIV3.Document,
+        validateRequests: true, //will be implemented in step2
+        validateResponses: true, //will be implemented in step2
+      })
+    );
   }
 
   private setupControllers(): void {

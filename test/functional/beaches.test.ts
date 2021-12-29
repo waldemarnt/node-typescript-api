@@ -74,7 +74,7 @@ describe('Beaches functional tests', () => {
       expect(response.status).toBe(500);
       expect(response.body).toEqual({
         code: 500,
-        error: 'Server Error',
+        error: 'Internal Server Error',
         message: 'Something went wrong!',
       });
     });
