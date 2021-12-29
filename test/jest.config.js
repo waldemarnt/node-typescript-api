@@ -8,7 +8,6 @@ module.exports = {...rootConfig, ...{
   setupFilesAfterEnv: ["<rootDir>/test/jest-setup.ts"],
   testMatch: ["<rootDir>/test/**/*.test.ts"],
   transformIgnorePatterns: [
-    '<rootDir>/node_modules/@babel',
-    '<rootDir>/node_modules/@jest',
+    'is-typedarray',
   ]
 }}
