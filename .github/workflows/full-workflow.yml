@@ -21,11 +21,11 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
 
     services:
       mongodb:
-        image: mongo:4.2
+        image: mongo:5.0
         ports:
           - 27017
         options: >-
