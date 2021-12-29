@@ -1,13 +1,13 @@
 import config, { IConfig } from 'config';
-import mongoose, { Mongoose } from 'mongoose';
+import { connect as mongooseConnect, connection } from 'mongoose';
 
 const dbConfig: IConfig = config.get('App.database');
 
-export const connect = async (): Promise<Mongoose> =>
-  await mongoose.connect(dbConfig.get('mongoUrl'), {
-    useCreateIndex: true,
+export const connect = async (): Promise<void> => {
+  await mongooseConnect(dbConfig.get('mongoUrl'), {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useUnifiedTopology: true
   });
+};
 
-export const close = (): Promise<void> => mongoose.connection.close();
+export const close = (): Promise<void> => connection.close();
