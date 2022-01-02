@@ -8,10 +8,7 @@ import {
 } from '@src/repository/defaultMongoDBRepository';
 
 export abstract class BaseController {
-  protected sendCreateUpdateErrorResponse(
-    res: Response,
-    error: DatabaseError | Error
-  ): void {
+  protected sendCreateUpdateErrorResponse(res: Response, error: unknown): void {
     if (
       error instanceof DatabaseValidationError ||
       error instanceof DatabaseUnknownClientError
@@ -24,16 +21,17 @@ export abstract class BaseController {
         })
       );
     } else {
-      logger.error(error);
+      logger.error(JSON.stringify(error));
       res
         .status(500)
         .send(ApiError.format({ code: 500, message: 'Something went wrong!' }));
     }
   }
 
-  private handleClientErrors(
-    error: DatabaseError
-  ): { code: number; error: string } {
+  private handleClientErrors(error: DatabaseError): {
+    code: number;
+    error: string;
+  } {
     if (error instanceof DatabaseValidationError) {
       return { code: 409, error: error.message };
     }

@@ -42,7 +42,8 @@ export class Forecast {
         forecast: _.orderBy(t.forecast, [orderField], [orderBy]),
       }));
     } catch (error) {
-      throw new ForecastProcessingInternalError(error.message);
+      logger.error(error);
+      throw new ForecastProcessingInternalError((error as Error).message);
     }
   }
 
@@ -80,14 +81,11 @@ export class Forecast {
     rating: Rating
   ): BeachForecast[] {
     return points.map((point) => ({
-      ...{},
-      ...{
-        lat: beach.lat,
-        lng: beach.lng,
-        name: beach.name,
-        position: beach.position,
-        rating: rating.getRateForPoint(point),
-      },
+      lat: beach.lat,
+      lng: beach.lng,
+      name: beach.name,
+      position: beach.position,
+      rating: rating.getRateForPoint(point),
       ...point,
     }));
   }

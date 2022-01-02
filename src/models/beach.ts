@@ -1,4 +1,4 @@
-import mongoose, { Document, Model, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 export enum GeoPosition {
   S = 'S',
@@ -35,5 +35,4 @@ const schema = new mongoose.Schema(
   }
 );
 
-export interface BeachDocument extends Omit<Beach, 'id'>, Document {}
-export const Beach: Model<BeachDocument> = mongoose.model('Beach', schema);
+export const Beach = mongoose.model<Beach>('Beach', schema);

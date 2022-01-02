@@ -3,7 +3,15 @@
 
 name: Complete workflow
 
-on: ['push', 'pull_request']
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
 
 jobs:
 
@@ -13,38 +21,39 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
-        mongodb-version: [4.2]
+        node-version: [16.x]
+
+    services:
+      mongodb:
+        image: mongo:5.0
+        ports:
+          - 27017
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
-    - uses: actions/checkout@v2
-    - run: git fetch --prune --unshallow
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Start MongoDB
-      uses: supercharge/mongodb-github-action@1.1.0
-      with:
-        mongodb-version: ${{ matrix.mongodb-version }}
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
 
-    - name: Install dependencies
-      run: yarn --frozen-lockfile
+      - name: Run all tests
+        env:
+          MONGODB_URL: mongodb://localhost:${{ job.services.mongodb.ports[27017] }}/surf-forecast-test
+        run: yarn test
 
-    - name: Run all tests
-      run: yarn test
-
-    - shell: bash
-      if: github.ref == 'refs/heads/master'
-      name: Create SSH deployment key
-      env:
-        SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: ./scripts/deploy.sh
-
-    - name: Deployment
-      if: github.ref == 'refs/heads/master'
-      run: git remote add umbler ssh://git@geonosis.deploy.umbler.com:9922/jy4xooxj/waldemarnt2-com.git && git push umbler master
-      env:
-        CI: true
+      - name: Deploy application
+        if: ${{ github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' }}
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "dev-lab-1"
+          heroku_email: "waldemarnt@gmail.com"

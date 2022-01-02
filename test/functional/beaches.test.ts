@@ -1,6 +1,6 @@
+import AuthService from '@src/services/auth';
 import { Beach } from '@src/models/beach';
 import { UserMongoDBRepository } from '@src/repository/userMongoDBRepository';
-import AuthService from '@src/services/auth';
 
 describe('Beaches functional tests', () => {
   const defaultUser = {
@@ -60,7 +60,7 @@ describe('Beaches functional tests', () => {
     it('should return 500 when there is any error other than validation error', async () => {
       jest
         .spyOn(Beach.prototype, 'save')
-        .mockImplementationOnce(() => Promise.reject('fail to create beach'));
+        .mockRejectedValueOnce('fail to create beach');
       const newBeach = {
         lat: -33.792726,
         lng: 46.43243,
@@ -75,7 +75,7 @@ describe('Beaches functional tests', () => {
       expect(response.status).toBe(500);
       expect(response.body).toEqual({
         code: 500,
-        error: 'Server Error',
+        error: 'Internal Server Error',
         message: 'Something went wrong!',
       });
     });

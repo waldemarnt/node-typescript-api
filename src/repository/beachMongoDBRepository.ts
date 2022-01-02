@@ -1,10 +1,11 @@
 import { DefaultMongoDBRepository } from './defaultMongoDBRepository';
-import { Beach, BeachDocument } from '@src/models/beach';
+import { Beach } from '@src/models/beach';
 import { BeachRepository } from '.';
 
 export class BeachMongoDBRepository
-  extends DefaultMongoDBRepository<Beach, BeachDocument>
-  implements BeachRepository {
+  extends DefaultMongoDBRepository<Beach>
+  implements BeachRepository
+{
   constructor(beachModel = Beach) {
     super(beachModel);
   }

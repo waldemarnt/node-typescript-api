@@ -1,6 +1,6 @@
 import logger from '@src/logger';
 import { CUSTOM_VALIDATION } from '@src/models/user';
-import { Document, Error, FilterQuery, Model } from 'mongoose';
+import { Error, FilterQuery, Model, Types } from 'mongoose';
 
 export class DatabaseError extends Error {
   constructor(message: string) {
@@ -13,10 +13,17 @@ export class DatabaseUnknownClientError extends DatabaseError {}
 
 export class DatabaseInternalError extends DatabaseError {}
 
-export abstract class DefaultMongoDBRepository<D, T extends Document> {
-  constructor(private model: Model<T>) {}
+type DocumentWithId<T> = T & {
+  id: Types.ObjectId;
+};
 
-  async create(data: Omit<D, 'id'>): Promise<D> {
+export abstract class DefaultMongoDBRepository<
+  D extends object,
+  R = DocumentWithId<D>
+> {
+  constructor(private model: Model<D>) {}
+
+  async create<T>(data: T) {
     try {
       const model = new this.model(data);
       const createdData = await model.save();
@@ -26,19 +33,19 @@ export abstract class DefaultMongoDBRepository<D, T extends Document> {
     }
   }
 
-  async findOne(options: FilterQuery<T>): Promise<D | undefined> {
+  async findOne(options: FilterQuery<R>) {
     try {
       const data = await this.model.findOne(options);
-      return data?.toJSON<D>();
+      return data?.toJSON<R>();
     } catch (error) {
       this.handleError(error);
     }
   }
 
-  async find(filter: FilterQuery<T>): Promise<D[]> {
+  async find(filter: FilterQuery<R>) {
     try {
       const data = await this.model.find(filter);
-      return data.map((d) => d.toJSON<D>());
+      return data.map((d) => d.toJSON<R>());
     } catch (error) {
       this.handleError(error);
     }
@@ -48,10 +55,12 @@ export abstract class DefaultMongoDBRepository<D, T extends Document> {
     await this.model.deleteMany({});
   }
 
-  protected handleError(error: Error.ValidationError): never {
+  protected handleError(error: unknown): never {
     if (error instanceof Error.ValidationError) {
       const duplicatedKindErrors = Object.values(error.errors).filter(
-        (err) => err.kind === CUSTOM_VALIDATION.DUPLICATED
+        (err) =>
+          err.name === 'ValidatorError' &&
+          err.kind === CUSTOM_VALIDATION.DUPLICATED
       );
       if (duplicatedKindErrors.length) {
         throw new DatabaseValidationError(error.message);

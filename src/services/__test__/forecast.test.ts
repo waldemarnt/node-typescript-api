@@ -1,7 +1,8 @@
+import { Beach, GeoPosition } from '@src/models/beach';
+import { Forecast, ForecastProcessingInternalError } from '../forecast';
+
 import { StormGlass } from '@src/clients/stormGlass';
 import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
-import { Forecast, ForecastProcessingInternalError } from '../forecast';
-import { Beach, GeoPosition } from '@src/models/beach';
 
 jest.mock('@src/clients/stormGlass');
 
@@ -25,7 +26,7 @@ describe('Forecast Service', () => {
     },
   ];
   const mockedStormGlassService = new StormGlass() as jest.Mocked<StormGlass>;
-  it('should return the forecast for mutiple beaches in the same hour with different ratings ordered by rating decreasing', async () => {
+  it('should return the forecast for multiple beaches in the same hour with different ratings ordered by rating decreasing', async () => {
     mockedStormGlassService.fetchPoints.mockResolvedValueOnce([
       {
         swellDirection: 123.41,
@@ -96,7 +97,7 @@ describe('Forecast Service', () => {
     expect(beachesWithRating).toEqual(expectedResponse);
   });
 
-  it('should return the forecast for mutiple beaches in the same hour with different ratings ordered by rating increasing', async () => {
+  it('should return the forecast for multiple beaches in the same hour with different ratings ordered by rating increasing', async () => {
     mockedStormGlassService.fetchPoints.mockResolvedValueOnce([
       {
         swellDirection: 123.41,
@@ -237,7 +238,7 @@ describe('Forecast Service', () => {
     );
     expect(beachesWithRating).toEqual(expectedResponse);
   });
-  it('should return the forecast for mutiple beaches in the same hour with different lng ordered by decreasing', async () => {
+  it('should return the forecast for multiple beaches in the same hour with different lng ordered by decreasing', async () => {
     mockedStormGlassService.fetchPoints.mockResolvedValueOnce([
       {
         swellDirection: 123.41,
