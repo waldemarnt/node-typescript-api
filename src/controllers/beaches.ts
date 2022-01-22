@@ -3,7 +3,6 @@ import { Request, Response } from 'express';
 import { authMiddleware } from '@src/middlewares/auth';
 import { BaseController } from '.';
 import { BeachRepository } from '@src/repository';
-import { Beach } from '@src/models/beach';
 
 @Controller('beaches')
 @ClassMiddleware(authMiddleware)
@@ -14,7 +13,7 @@ export class BeachesController extends BaseController {
   @Post('')
   public async create(req: Request, res: Response): Promise<void> {
     try {
-      const result = await this.beachRepository.create<Omit<Beach, 'id'>>({
+      const result = await this.beachRepository.create({
         ...req.body,
         ...{ userId: req.context?.userId },
       });

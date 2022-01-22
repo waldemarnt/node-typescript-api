@@ -5,7 +5,7 @@ import {
   DatabaseError,
   DatabaseUnknownClientError,
   DatabaseValidationError,
-} from '@src/repository/defaultMongoDBRepository';
+} from '@src/repository/repository';
 
 export abstract class BaseController {
   protected sendCreateUpdateErrorResponse(res: Response, error: unknown): void {

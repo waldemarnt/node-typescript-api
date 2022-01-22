@@ -4,7 +4,6 @@ import AuthService from '@src/services/auth';
 import { BaseController } from './index';
 import { authMiddleware } from '@src/middlewares/auth';
 import { UserRepository } from '@src/repository';
-import { User } from '@src/models/user';
 
 @Controller('users')
 export class UsersController extends BaseController {
@@ -15,9 +14,7 @@ export class UsersController extends BaseController {
   @Post('')
   public async create(req: Request, res: Response): Promise<void> {
     try {
-      const newUser = await this.userRepository.create<Omit<User, 'id'>>(
-        req.body
-      );
+      const newUser = await this.userRepository.create(req.body);
       res.status(201).send(newUser);
     } catch (error) {
       this.sendCreateUpdateErrorResponse(res, error);

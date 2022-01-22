@@ -10,7 +10,7 @@ export class BeachMongoDBRepository
     super(beachModel);
   }
 
-  async findAllBeachesForUser(userId: string): Promise<Beach[]> {
+  async findAllBeachesForUser(userId: string) {
     return await this.find({ userId });
   }
 }

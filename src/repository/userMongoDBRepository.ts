@@ -14,7 +14,7 @@ export class UserMongoDBRepository
     return await this.findOne({ _id: id });
   }
 
-  async findOneByEmail(email: string): Promise<User | undefined> {
+  async findOneByEmail(email: string) {
     return await this.findOne({ email });
   }
 }

@@ -1,13 +1,22 @@
 import { Beach } from '@src/models/beach';
 import { User } from '@src/models/user';
 
-export interface BeachRepository {
-  create<T>(data: T): Promise<Beach>;
-  findAllBeachesForUser(userId: string): Promise<Beach[]>;
+export type FilterOptions = Record<string, unknown>;
+
+export type WithId<T> = { id: string } & T;
+
+export interface BaseRepository<T> {
+  create(data: T): Promise<WithId<T>>;
+  findOne(options: FilterOptions): Promise<WithId<T> | undefined>;
+  find(options: FilterOptions): Promise<WithId<T>[]>;
+  deleteAll(): Promise<void>;
 }
 
-export interface UserRepository {
-  create<T>(data: T): Promise<User>;
-  findOneById(id: string): Promise<User | undefined>;
-  findOneByEmail(email: string): Promise<User | undefined>;
+export interface BeachRepository extends BaseRepository<Beach> {
+  findAllBeachesForUser(userId: string): Promise<WithId<Beach>[]>;
+}
+
+export interface UserRepository extends BaseRepository<User> {
+  findOneById(id: string): Promise<WithId<User> | undefined>;
+  findOneByEmail(email: string): Promise<WithId<User> | undefined>;
 }

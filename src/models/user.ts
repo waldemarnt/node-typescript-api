@@ -1,12 +1,16 @@
 import mongoose, { Document } from 'mongoose';
 import AuthService from '@src/services/auth';
 import logger from '@src/logger';
+import { BaseModel } from '.';
 
-export interface User {
-  id: string;
+export interface User extends BaseModel {
   name: string;
   email: string;
   password: string;
+}
+
+export interface ExistingUser extends User {
+  id: string;
 }
 
 export enum CUSTOM_VALIDATION {

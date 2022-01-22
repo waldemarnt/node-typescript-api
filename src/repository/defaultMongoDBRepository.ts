@@ -1,57 +1,51 @@
 import logger from '@src/logger';
+import { BaseModel } from '@src/models';
 import { CUSTOM_VALIDATION } from '@src/models/user';
-import { Error, FilterQuery, Model, Types } from 'mongoose';
-
-export class DatabaseError extends Error {
-  constructor(message: string) {
-    super(message);
-  }
-}
-export class DatabaseValidationError extends DatabaseError {}
-
-export class DatabaseUnknownClientError extends DatabaseError {}
-
-export class DatabaseInternalError extends DatabaseError {}
-
-type DocumentWithId<T> = T & {
-  id: Types.ObjectId;
-};
+import { Error, Model } from 'mongoose';
+import { FilterOptions, WithId } from '.';
+import {
+  DatabaseInternalError,
+  DatabaseUnknownClientError,
+  DatabaseValidationError,
+  Repository,
+} from './repository';
 
 export abstract class DefaultMongoDBRepository<
-  D extends object,
-  R = DocumentWithId<D>
-> {
-  constructor(private model: Model<D>) {}
+  T extends BaseModel
+> extends Repository<T> {
+  constructor(private model: Model<T>) {
+    super();
+  }
 
-  async create<T>(data: T) {
+  async create(data: T) {
     try {
       const model = new this.model(data);
       const createdData = await model.save();
-      return createdData.toJSON<D>();
+      return createdData.toJSON<WithId<T>>();
     } catch (error) {
       this.handleError(error);
     }
   }
 
-  async findOne(options: FilterQuery<R>) {
+  async findOne(options: FilterOptions) {
     try {
       const data = await this.model.findOne(options);
-      return data?.toJSON<R>();
+      return data?.toJSON<WithId<T>>();
     } catch (error) {
       this.handleError(error);
     }
   }
 
-  async find(filter: FilterQuery<R>) {
+  async find(filter: FilterOptions) {
     try {
       const data = await this.model.find(filter);
-      return data.map((d) => d.toJSON<R>());
+      return data.map((d) => d.toJSON<WithId<T>>());
     } catch (error) {
       this.handleError(error);
     }
   }
 
-  async deleteAll(): Promise<void> {
+  async deleteAll() {
     await this.model.deleteMany({});
   }
 

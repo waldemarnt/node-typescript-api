@@ -1,4 +1,4 @@
-import { Beach, GeoPosition } from '@src/models/beach';
+import { ExistingBeach, GeoPosition } from '@src/models/beach';
 import { Forecast, ForecastProcessingInternalError } from '../forecast';
 
 import { StormGlass } from '@src/clients/stormGlass';
@@ -7,7 +7,7 @@ import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_norma
 jest.mock('@src/clients/stormGlass');
 
 describe('Forecast Service', () => {
-  const defaultBeaches: Beach[] = [
+  const defaultBeaches: ExistingBeach[] = [
     {
       id: 'fake-id1',
       lat: -33.792726,
@@ -313,7 +313,7 @@ describe('Forecast Service', () => {
     mockedStormGlassService.fetchPoints.mockResolvedValue(
       stormGlassNormalizedResponseFixture
     );
-    const beaches: Beach[] = [
+    const beaches: ExistingBeach[] = [
       {
         id: 'fake-id1',
         lat: -33.792726,
@@ -397,7 +397,7 @@ describe('Forecast Service', () => {
   });
 
   it('should throw internal processing error when something goes wrong during the rating process', async () => {
-    const beaches: Beach[] = [
+    const beaches: ExistingBeach[] = [
       {
         id: 'fake-id1',
         lat: -33.792726,
