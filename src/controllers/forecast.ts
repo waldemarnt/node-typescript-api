@@ -12,6 +12,7 @@ import { BaseController } from '.';
 import logger from '@src/logger';
 import rateLimit from 'express-rate-limit';
 import ApiError from '@src/util/errors/api-error';
+import { BeachRepository } from '@src/repository';
 
 const forecast = new Forecast();
 
@@ -34,6 +35,10 @@ const rateLimiter = rateLimit({
 @Controller('forecast')
 @ClassMiddleware(authMiddleware)
 export class ForecastController extends BaseController {
+  constructor(private beachRepository: BeachRepository) {
+    super();
+  }
+
   @Get('')
   @Middleware(rateLimiter)
   public async getForecastForgeLoggedUser(
@@ -48,7 +53,17 @@ export class ForecastController extends BaseController {
         orderBy?: 'asc' | 'desc';
         orderField?: keyof BeachForecast;
       } = req.query;
-      const beaches = await Beach.find({ userId: req.context?.userId });
+      if (!req.context?.userId) {
+        this.sendErrorResponse(res, {
+          code: 500,
+          message: 'Something went wrong',
+        });
+        logger.error('Missing userId');
+        return;
+      }
+      const beaches = await this.beachRepository.findAllBeachesForUser(
+        req.context?.userId
+      );
       const forecastData = await forecast.processForecastForBeaches(
         beaches,
         orderBy,
