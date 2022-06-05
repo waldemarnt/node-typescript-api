@@ -1,4 +1,4 @@
-import { UserMongoDBRepository } from '@src/repository/userMongoDBRepository';
+import { UserMongoDBRepository } from '@src/repositories/userMongoDBRepository';
 import AuthService from '@src/services/auth';
 
 describe('Users functional tests', () => {

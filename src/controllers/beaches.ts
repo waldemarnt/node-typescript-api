@@ -2,7 +2,7 @@ import { Controller, Post, ClassMiddleware } from '@overnightjs/core';
 import { Request, Response } from 'express';
 import { authMiddleware } from '@src/middlewares/auth';
 import { BaseController } from '.';
-import { BeachRepository } from '@src/repository';
+import { BeachRepository } from '@src/repositories';
 
 @Controller('beaches')
 @ClassMiddleware(authMiddleware)

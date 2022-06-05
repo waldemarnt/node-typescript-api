@@ -1,6 +1,6 @@
 import AuthService from '@src/services/auth';
 import { Beach } from '@src/models/beach';
-import { UserMongoDBRepository } from '@src/repository/userMongoDBRepository';
+import { UserMongoDBRepository } from '@src/repositories/userMongoDBRepository';
 
 describe('Beaches functional tests', () => {
   const defaultUser = {

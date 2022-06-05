@@ -11,7 +11,7 @@ import { BaseController } from '.';
 import logger from '@src/logger';
 import rateLimit from 'express-rate-limit';
 import ApiError from '@src/util/errors/api-error';
-import { BeachRepository } from '@src/repository';
+import { BeachRepository } from '@src/repositories';
 
 const forecast = new Forecast();
 

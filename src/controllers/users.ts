@@ -3,7 +3,7 @@ import { Response, Request } from 'express';
 import AuthService from '@src/services/auth';
 import { BaseController } from './index';
 import { authMiddleware } from '@src/middlewares/auth';
-import { UserRepository } from '@src/repository';
+import { UserRepository } from '@src/repositories';
 
 @Controller('users')
 export class UsersController extends BaseController {
