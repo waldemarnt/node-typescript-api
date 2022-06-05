@@ -11,7 +11,7 @@ export class UserMongoDBRepository
   }
 
   async findOneById(id: string) {
-    return await this.findOne({ _id: id });
+    return this.findOne({ _id: id });
   }
 
   async findOneByEmail(email: string) {
