@@ -51,7 +51,7 @@ export class UsersController extends BaseController {
     if (!userId) {
       return this.sendErrorResponse(res, {
         code: 404,
-        message: `user id not provided`,
+        message: 'user id not provided',
       });
     }
     const user = await this.userRepository.findOneById(userId);
