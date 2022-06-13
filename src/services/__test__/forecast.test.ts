@@ -1,4 +1,4 @@
-import { Beach, GeoPosition } from '@src/models/beach';
+import { ExistingBeach, GeoPosition } from '@src/models/beach';
 import { Forecast, ForecastProcessingInternalError } from '../forecast';
 
 import { StormGlass } from '@src/clients/stormGlass';
@@ -7,6 +7,24 @@ import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_norma
 jest.mock('@src/clients/stormGlass');
 
 describe('Forecast Service', () => {
+  const defaultBeaches: ExistingBeach[] = [
+    {
+      id: 'fake-id1',
+      lat: -33.792726,
+      lng: 151.289824,
+      name: 'Manly',
+      position: GeoPosition.E,
+      userId: 'fake-id',
+    },
+    {
+      id: 'fake-id2',
+      lat: -33.792726,
+      lng: 141.289824,
+      name: 'Dee Why',
+      position: GeoPosition.S,
+      userId: 'fake-id',
+    },
+  ];
   const mockedStormGlassService = new StormGlass() as jest.Mocked<StormGlass>;
   it('should return the forecast for multiple beaches in the same hour with different ratings ordered by rating decreasing', async () => {
     mockedStormGlassService.fetchPoints.mockResolvedValueOnce([
@@ -33,22 +51,6 @@ describe('Forecast Service', () => {
         windSpeed: 100,
       },
     ]);
-    const beaches: Beach[] = [
-      {
-        lat: -33.792726,
-        lng: 151.289824,
-        name: 'Manly',
-        position: GeoPosition.E,
-        userId: 'fake-id',
-      },
-      {
-        lat: -33.792726,
-        lng: 141.289824,
-        name: 'Dee Why',
-        position: GeoPosition.S,
-        userId: 'fake-id',
-      },
-    ];
     const expectedResponse = [
       {
         time: '2020-04-26T00:00:00+00:00',
@@ -88,7 +90,7 @@ describe('Forecast Service', () => {
     ];
     const forecast = new Forecast(mockedStormGlassService);
     const beachesWithRating = await forecast.processForecastForBeaches(
-      beaches,
+      defaultBeaches,
       'desc',
       'rating'
     );
@@ -120,22 +122,6 @@ describe('Forecast Service', () => {
         windSpeed: 100,
       },
     ]);
-    const beaches: Beach[] = [
-      {
-        lat: -33.792726,
-        lng: 151.289824,
-        name: 'Manly',
-        position: GeoPosition.E,
-        userId: 'fake-id',
-      },
-      {
-        lat: -33.792726,
-        lng: 141.289824,
-        name: 'Dee Why',
-        position: GeoPosition.S,
-        userId: 'fake-id',
-      },
-    ];
     const expectedResponse = [
       {
         time: '2020-04-26T00:00:00+00:00',
@@ -175,7 +161,7 @@ describe('Forecast Service', () => {
     ];
     const forecast = new Forecast(mockedStormGlassService);
     const beachesWithRating = await forecast.processForecastForBeaches(
-      beaches,
+      defaultBeaches,
       'asc',
       'rating'
     );
@@ -207,22 +193,6 @@ describe('Forecast Service', () => {
         windSpeed: 100,
       },
     ]);
-    const beaches: Beach[] = [
-      {
-        lat: -33.792726,
-        lng: 151.289824,
-        name: 'Manly',
-        position: GeoPosition.E,
-        userId: 'fake-id',
-      },
-      {
-        lat: -33.792726,
-        lng: 141.289824,
-        name: 'Dee Why',
-        position: GeoPosition.S,
-        userId: 'fake-id',
-      },
-    ];
     const expectedResponse = [
       {
         time: '2020-04-26T00:00:00+00:00',
@@ -262,7 +232,7 @@ describe('Forecast Service', () => {
     ];
     const forecast = new Forecast(mockedStormGlassService);
     const beachesWithRating = await forecast.processForecastForBeaches(
-      beaches,
+      defaultBeaches,
       'asc',
       'lng'
     );
@@ -293,22 +263,6 @@ describe('Forecast Service', () => {
         windSpeed: 100,
       },
     ]);
-    const beaches: Beach[] = [
-      {
-        lat: -33.792726,
-        lng: 151.289824,
-        name: 'Manly',
-        position: GeoPosition.E,
-        userId: 'fake-id',
-      },
-      {
-        lat: -33.792726,
-        lng: 141.289824,
-        name: 'Dee Why',
-        position: GeoPosition.S,
-        userId: 'fake-id',
-      },
-    ];
     const expectedResponse = [
       {
         time: '2020-04-26T00:00:00+00:00',
@@ -348,7 +302,7 @@ describe('Forecast Service', () => {
     ];
     const forecast = new Forecast(mockedStormGlassService);
     const beachesWithRating = await forecast.processForecastForBeaches(
-      beaches,
+      defaultBeaches,
       'desc',
       'lng'
     );
@@ -359,8 +313,9 @@ describe('Forecast Service', () => {
     mockedStormGlassService.fetchPoints.mockResolvedValue(
       stormGlassNormalizedResponseFixture
     );
-    const beaches: Beach[] = [
+    const beaches: ExistingBeach[] = [
       {
+        id: 'fake-id1',
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',
@@ -442,8 +397,9 @@ describe('Forecast Service', () => {
   });
 
   it('should throw internal processing error when something goes wrong during the rating process', async () => {
-    const beaches: Beach[] = [
+    const beaches: ExistingBeach[] = [
       {
+        id: 'fake-id1',
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',

@@ -1,9 +1,10 @@
-import { User } from '@src/models/user';
+import { UserMongoDBRepository } from '@src/repositories/userMongoDBRepository';
 import AuthService from '@src/services/auth';
 
 describe('Users functional tests', () => {
+  const defaultUserRepository = new UserMongoDBRepository();
   beforeEach(async () => {
-    await User.deleteMany({});
+    await defaultUserRepository.deleteAll();
   });
   describe('When creating a new user', () => {
     it('should successfully create a new user with encrypted password', async () => {
@@ -66,7 +67,7 @@ describe('Users functional tests', () => {
         email: 'john@mail.com',
         password: '1234',
       };
-      const user = await new User(newUser).save();
+      const user = await defaultUserRepository.create(newUser);
       const response = await global.testRequest
         .post('/users/authenticate')
         .send({ email: newUser.email, password: newUser.password });
@@ -88,7 +89,7 @@ describe('Users functional tests', () => {
         email: 'john@mail.com',
         password: '1234',
       };
-      await new User(newUser).save();
+      await defaultUserRepository.create(newUser);
       const response = await global.testRequest
         .post('/users/authenticate')
         .send({ email: newUser.email, password: 'different password' });
@@ -104,7 +105,7 @@ describe('Users functional tests', () => {
         email: 'john@mail.com',
         password: '1234',
       };
-      const user = await new User(newUser).save();
+      const user = await defaultUserRepository.create(newUser);
       const token = AuthService.generateToken(user.id);
       const { body, status } = await global.testRequest
         .get('/users/me')
