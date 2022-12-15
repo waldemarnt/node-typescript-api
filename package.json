@@ -42,7 +42,7 @@
     "body-parser": "^1.19.1",
     "config": "^3.3.6",
     "cors": "^2.8.5",
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "express-openapi-validator": "^4.13.5",
     "express-pino-logger": "^7.0.0",
     "express-rate-limit": "^6.0.1",
