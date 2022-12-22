@@ -47,7 +47,7 @@
     "express-pino-logger": "^7.0.0",
     "express-rate-limit": "^6.0.1",
     "http-status-codes": "^2.2.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
