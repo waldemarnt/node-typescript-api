@@ -51,7 +51,7 @@
     "lodash": "^4.17.21",
     "module-alias": "^2.2.2",
     "moment": "^2.29.1",
-    "mongoose": "^6.1.4",
+    "mongoose": "^6.4.6",
     "node-cache": "^5.1.2",
     "pino": "^7.6.2",
     "swagger-ui-express": "^4.3.0"
